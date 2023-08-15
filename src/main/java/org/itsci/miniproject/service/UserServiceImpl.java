@@ -1,5 +1,6 @@
 package org.itsci.miniproject.service;
 
+import org.itsci.miniproject.model.Login;
 import org.itsci.miniproject.model.User;
 import org.itsci.miniproject.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +33,10 @@ public class UserServiceImpl implements UserService{
         String address = map.get("address");
         String email = map.get("email");
         String mobileNo = map.get("mobileNo");
+        String userName = map.get("username");
+        String password = map.get("password");
 
-        User user = new User(userId,firstname,lastname,address,email,mobileNo);
+        User user = new User(userId,firstname,lastname,address,email,mobileNo,new Login(userName,password));
 
         return userRepository.save(user);
     }

@@ -40,7 +40,7 @@ public class AuthorityController {
         }
     }
 
-    @GetMapping("/add")
+    @RequestMapping("/add")
     public ResponseEntity addAuthority(@RequestBody Map<String,String> map){
         try {
             Authority authority = authorityService.saveAuthority(map);

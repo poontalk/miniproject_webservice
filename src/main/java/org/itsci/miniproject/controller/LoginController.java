@@ -40,14 +40,14 @@ public class LoginController {
         }
     }
 
-    @GetMapping("/add")
+    @RequestMapping("/add")
     public ResponseEntity addLogin(@RequestBody Map<String,String> map){
         try {
             Login login = loginService.saveLogin(map);
             return new ResponseEntity<>(login,HttpStatus.OK);
         }catch (Exception e){
             e.printStackTrace();
-            return  new ResponseEntity<>("Failed Add logn",HttpStatus.INTERNAL_SERVER_ERROR);
+            return  new ResponseEntity<>("Failed Add login",HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

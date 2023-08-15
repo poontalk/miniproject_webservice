@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/user")
 public class UserController {
     @Autowired
@@ -39,7 +40,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/add")
+    @RequestMapping("/add")
     public ResponseEntity addUser(@RequestBody Map<String,String> map){
         try {
             User user = userService.saveUser(map);
@@ -81,5 +82,7 @@ public class UserController {
             return new ResponseEntity<>("Failed to get User by Name",HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
 
 }
