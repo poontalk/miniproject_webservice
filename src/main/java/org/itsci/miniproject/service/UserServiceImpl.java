@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public User saveUser(Map<String, String> map) {
 
-        String userId = map.get("userId");
+        String userId = generateUserId();
         String firstname = map.get("firstName");
         String lastname = map.get("lastName");
         String address = map.get("address");
@@ -57,7 +57,20 @@ public class UserServiceImpl implements UserService{
         return userRepository.getUsersByFirstNameContainingIgnoreCase(firstName);
     }
 
+    public long getAccountCount(){
+    try{
+        return userRepository.count();
+    }catch (Exception e){
+        return 0;
+        }
+    }
 
-
-
+    public String generateUserId(){
+    String result = "" + (getAccountCount() + 1);
+    while (result.length() < 4){
+        result = "0" + result;
+    }
+    result = "U"+ result;
+    return result;
+    }
 }
