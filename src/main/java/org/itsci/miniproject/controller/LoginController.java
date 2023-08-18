@@ -2,6 +2,7 @@ package org.itsci.miniproject.controller;
 
 import org.itsci.miniproject.model.Login;
 import org.itsci.miniproject.model.User;
+import org.itsci.miniproject.response.LoginResponse;
 import org.itsci.miniproject.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -82,5 +83,12 @@ public class LoginController {
             e.printStackTrace();
             return new ResponseEntity<>("Failed to get User by Name",HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @PostMapping("/loginUserName")
+    public ResponseEntity<?> loginUser(@RequestBody Login login)
+    {
+        LoginResponse loginResponse = loginService.loginUser(login);
+        return ResponseEntity.ok(loginResponse);
     }
 }

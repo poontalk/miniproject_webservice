@@ -33,8 +33,16 @@ public class Login {
 	private Set<Authority> authorities;
 
 	public Login( String username, String password) {
-
 		this.username = username;
 		this.password = password;
+	}
+
+	@Override
+	public String toString(){
+		return "CustomerDTO {" +
+				"loginid=" + loginId +
+				", username='" + username + '\'' +
+				", password='" + password + '\'' +
+				'}';
 	}
 }
