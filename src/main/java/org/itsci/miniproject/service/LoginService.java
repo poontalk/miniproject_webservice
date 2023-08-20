@@ -24,4 +24,6 @@ public interface LoginService {
     LoginResponse loginUser (Login login);
 
     Login findByUsername(String userName);
+
+    Login assignAuthorityToLogin(Long loginId, Integer authorityId);
 }

@@ -91,4 +91,9 @@ public class LoginController {
         LoginResponse loginResponse = loginService.loginUser(login);
         return ResponseEntity.ok(loginResponse);
     }
+
+    @PutMapping("/{loginId}/authority/{authorityId}")
+    public Login assignAuthorityToLogin(@PathVariable Long loginId, @PathVariable Integer authorityId){
+        return loginService.assignAuthorityToLogin(loginId,authorityId);
+    }
 }

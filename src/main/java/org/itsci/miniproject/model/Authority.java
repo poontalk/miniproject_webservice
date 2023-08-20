@@ -1,5 +1,6 @@
 package org.itsci.miniproject.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.persistence.Id;
@@ -24,7 +25,8 @@ public class Authority {
 	
 	@Column(nullable = false,length = 45)
 	private String role;
-	
+
+	@JsonIgnore
 	@ManyToMany(mappedBy = "authorities")
 	Set<Login> logins;
 

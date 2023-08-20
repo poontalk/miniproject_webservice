@@ -1,20 +1,22 @@
 package org.itsci.miniproject.service;
 
+import org.itsci.miniproject.model.Authority;
 import org.itsci.miniproject.model.Login;
+import org.itsci.miniproject.repository.AuthorityRepository;
 import org.itsci.miniproject.repository.LoginRepository;
 import org.itsci.miniproject.response.LoginResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class LoginServiceImpl implements LoginService{
     @Autowired
     private LoginRepository loginRepository;
+
+    @Autowired
+    private AuthorityRepository authorityRepository;
 
 //    @Autowired
 //    private PasswordEncoder passwordEncoder;
@@ -59,6 +61,19 @@ public class LoginServiceImpl implements LoginService{
     public Login findByUsername(String userName){
         return loginRepository.findByUsername(userName);
     }
+
+    @Override
+    public Login assignAuthorityToLogin(Long loginId, Integer authorityId) {
+        Set<Authority> authoritySet = null;
+        Login login = loginRepository.findByLoginId(loginId).get();
+        Authority authority = authorityRepository.findByAuthorityId(authorityId).get();
+        authoritySet = login.getAuthorities();
+        authoritySet.add(authority);
+        login.setAuthorities(authoritySet);
+
+        return loginRepository.save(login);
+    }
+
 
     @Override
     public LoginResponse loginUser(Login login) {

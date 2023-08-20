@@ -1,13 +1,16 @@
 package org.itsci.miniproject.service;
 
+import org.itsci.miniproject.model.Authority;
 import org.itsci.miniproject.model.Login;
 import org.itsci.miniproject.model.User;
 import org.itsci.miniproject.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -37,7 +40,6 @@ public class UserServiceImpl implements UserService{
         String password = map.get("password");
 
         User user = new User(userId,firstname,lastname,address,email,mobileNo,new Login(userName,password));
-
         return userRepository.save(user);
     }
 
