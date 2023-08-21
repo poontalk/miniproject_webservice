@@ -25,7 +25,7 @@ public class ServicesServiceImpl implements ServicesService{
 
     @Override
     public Service saveService(Map<String, String> map) {
-        String serviceId = map.get("serviceId");
+        String serviceId = generateServiceId();
         String serviceName = map.get("serviceName");
         String price = map.get("price");
         String timespend = map.get("timespend");
@@ -48,5 +48,22 @@ public class ServicesServiceImpl implements ServicesService{
     @Override
     public List<Service> getServicesByServiceNameContainingName(String serviceName) {
         return serviceRepository.getServicesByServiceNameContainingIgnoreCase(serviceName);
+    }
+
+    public long getAccountCount(){
+        try{
+            return serviceRepository.count();
+        }catch (Exception e){
+            return 0;
+        }
+    }
+
+    public String generateServiceId(){
+        String result = "" + (getAccountCount() + 1);
+        while (result.length() < 4){
+            result = "0" + result;
+        }
+        result = "S"+ result;
+        return result;
     }
 }
