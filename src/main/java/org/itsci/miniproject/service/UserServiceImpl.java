@@ -3,6 +3,8 @@ package org.itsci.miniproject.service;
 import org.itsci.miniproject.model.Authority;
 import org.itsci.miniproject.model.Login;
 import org.itsci.miniproject.model.User;
+import org.itsci.miniproject.repository.AuthorityRepository;
+import org.itsci.miniproject.repository.LoginRepository;
 import org.itsci.miniproject.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,8 +16,12 @@ import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService{
-@Autowired
+    @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private LoginRepository loginRepository;
+    @Autowired
+    private AuthorityRepository authorityRepository;
 
 @Override
     public List<User> getAllUsers() {
@@ -29,7 +35,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User saveUser(Map<String, String> map) {
-
+        Login login = new Login();
         String userId = generateUserId();
         String firstname = map.get("firstName");
         String lastname = map.get("lastName");
@@ -38,8 +44,20 @@ public class UserServiceImpl implements UserService{
         String mobileNo = map.get("mobileNo");
         String userName = map.get("username");
         String password = map.get("password");
+        login.setUsername(userName);
+        login.setPassword(password);
+        loginRepository.save(login);
 
-        User user = new User(userId,firstname,lastname,address,email,mobileNo,new Login(userName,password));
+        Set<Authority> authoritySet = null;
+        int authorityId = Integer.parseInt("4");
+        Authority authority = authorityRepository.findByAuthorityId(authorityId).get();
+        login = loginRepository.findByLoginId(login.getLoginId()).get();
+        authoritySet = login.getAuthorities();
+        authoritySet.add(authority);
+        login.setAuthorities(authoritySet);
+        loginRepository.save(login);
+
+        User user = new User(userId,firstname,lastname,address,email,mobileNo,login);
         return userRepository.save(user);
     }
 

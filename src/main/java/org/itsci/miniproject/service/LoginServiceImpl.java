@@ -35,10 +35,8 @@ public class LoginServiceImpl implements LoginService{
     public Login saveLogin(Map<String, String> map) {
         String userName = map.get("username");
         String password = map.get("password");
-
-        Login login = new Login(userName,password);
-
-        return loginRepository.save(login);
+        Login logins = new Login(userName,password);
+        return loginRepository.save(logins);
     }
 
     @Override
@@ -70,10 +68,8 @@ public class LoginServiceImpl implements LoginService{
         authoritySet = login.getAuthorities();
         authoritySet.add(authority);
         login.setAuthorities(authoritySet);
-
         return loginRepository.save(login);
     }
-
 
     @Override
     public LoginResponse loginUser(Login login) {

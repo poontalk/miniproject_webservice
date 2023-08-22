@@ -1,5 +1,6 @@
 package org.itsci.miniproject.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -30,7 +31,7 @@ public class Login {
 	  name = "authority_login", 
 	  joinColumns = @JoinColumn(name = "loginId"), 
 	  inverseJoinColumns = @JoinColumn(name = "authorityId"))
-	private Set<Authority> authorities;
+	private Set<Authority> authorities = new HashSet<>();
 
 	public Login( String username, String password) {
 		this.username = username;
