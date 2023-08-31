@@ -82,7 +82,6 @@ public class LoginServiceImpl implements LoginService{
             String encodePassword = login1.getPassword();
             if (password.equals(encodePassword)){
                 Optional<Login> login2 = loginRepository.findOneByUsernameAndPassword(login.getUsername(),login.getPassword());
-
                if(login2.isPresent()){
                     return new LoginResponse("Login Success " ,true);
                }else {

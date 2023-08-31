@@ -19,16 +19,16 @@ public class User {
 	@Column(length = 10)
 	private String userId;
 	
-	@Column(nullable = false , length = 45)	
+	@Column(nullable = false , length = 45)
 	private String firstName;
 	
-	@Column(nullable = false ,length = 45)	
+	@Column(nullable = false ,length = 45)
 	private String lastName;
 	
 	@Column(nullable = false ,length = 255)
 	private String address;
 	
-	@Column(nullable = false ,length = 45)	
+	@Column(nullable = false ,length = 45)
 	private String email;
 	
 	@Column(nullable = false ,length = 10)
@@ -45,5 +45,8 @@ public class User {
 		this.address = address;
 		this.email = email;
 		this.mobileNo = mobileNo;
+	}
+	public User(String userId) {
+		this.userId = userId;
 	}
 }

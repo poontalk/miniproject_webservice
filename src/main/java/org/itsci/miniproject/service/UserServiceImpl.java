@@ -1,9 +1,11 @@
 package org.itsci.miniproject.service;
 
 import org.itsci.miniproject.model.Authority;
+import org.itsci.miniproject.model.Customer;
 import org.itsci.miniproject.model.Login;
 import org.itsci.miniproject.model.User;
 import org.itsci.miniproject.repository.AuthorityRepository;
+import org.itsci.miniproject.repository.CustomerRepository;
 import org.itsci.miniproject.repository.LoginRepository;
 import org.itsci.miniproject.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,8 @@ public class UserServiceImpl implements UserService{
     private LoginRepository loginRepository;
     @Autowired
     private AuthorityRepository authorityRepository;
+    @Autowired
+    private CustomerRepository customerRepository;
 
 @Override
     public List<User> getAllUsers() {
@@ -37,6 +41,7 @@ public class UserServiceImpl implements UserService{
     public User saveUser(Map<String, String> map) {
         Login login = new Login();
         String userId = generateUserId();
+        String customerId = generateCustomerId();
         String firstname = map.get("firstName");
         String lastname = map.get("lastName");
         String address = map.get("address");
@@ -57,8 +62,8 @@ public class UserServiceImpl implements UserService{
         login.setAuthorities(authoritySet);
         loginRepository.save(login);
 
-        User user = new User(userId,firstname,lastname,address,email,mobileNo,login);
-        return userRepository.save(user);
+        Customer customer = new Customer(userId,firstname,lastname,address,email,mobileNo,login,customerId);
+        return userRepository.save(customer);
     }
 
     @Override
@@ -75,6 +80,28 @@ public class UserServiceImpl implements UserService{
     @Override
     public List<User> getUsersByFirstNameContainingName(String firstName) {
         return userRepository.getUsersByFirstNameContainingIgnoreCase(firstName);
+    }
+
+    @Override
+    public User getUserByUSerId(String userId) {
+        return userRepository.getUserByUserId(userId);
+    }
+
+    public long getCustomerCount(){
+        try{
+            return customerRepository.count();
+        }catch (Exception e){
+            return 0;
+        }
+    }
+
+    public String generateCustomerId(){
+        String result = "" + (getCustomerCount() + 1);
+        while (result.length() < 4){
+            result = "0" + result;
+        }
+        result = "C"+ result;
+        return result;
     }
 
     public long getAccountCount(){

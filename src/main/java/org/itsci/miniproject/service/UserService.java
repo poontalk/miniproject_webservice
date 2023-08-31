@@ -19,4 +19,6 @@ void deleteUser(String userId);
 
 List<User> getUsersByFirstNameContainingName(String firstName);
 
+User getUserByUSerId (String userId);
+
 }

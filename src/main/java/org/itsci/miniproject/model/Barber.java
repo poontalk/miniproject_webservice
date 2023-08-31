@@ -11,13 +11,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
-public class Barber extends User{
-	
+public class Barber {
+
+	@Id
 	@Column(nullable = false, length = 10)
 	private String barberId;
 	
 	@Column(nullable = false, length = 45)
 	private String barberStatus;
-	
-	
+
+	@OneToOne(cascade = CascadeType.ALL,optional = false)
+	@JoinColumn(name = "userId")
+	private User user;
+
+
+
 }

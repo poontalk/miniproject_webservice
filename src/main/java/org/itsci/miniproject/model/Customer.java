@@ -15,6 +15,10 @@ import lombok.NoArgsConstructor;
 public class Customer extends User{
 	
 	@Column(nullable = false, length = 10)
-	private String customerId;	
-	
+	private String customerId;
+
+	public Customer(String userId, String firstName, String lastName, String address, String email, String mobileNo, Login login, String customerId) {
+		super(userId, firstName, lastName, address, email, mobileNo, login);
+		this.customerId = customerId;
+	}
 }
