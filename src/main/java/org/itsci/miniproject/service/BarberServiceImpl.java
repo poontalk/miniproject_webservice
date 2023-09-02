@@ -40,21 +40,20 @@ public class BarberServiceImpl implements BarberService{
 
     @Override
     public Barber saveBarber(Map<String,String> map) {
-        Barber barber2 = new Barber();
         Login login = new Login();
         String userId = map.get("userId");
         User user2 = userRepository.getUserByUserId(userId);
         String barberId = generateBarberId();
         String barberStatus = "ว่าง";
 
-//        Set<Authority> authoritySet = null;
-//        int authorityId = Integer.parseInt("3");
-//        Authority authority = authorityRepository.findByAuthorityId(authorityId).get();
-//        login = loginRepository.findByLoginId(login.getLoginId()).get();
-//        authoritySet = login.getAuthorities();
-//        authoritySet.add(authority);
-//        login.setAuthorities(authoritySet);
-//        loginRepository.save(login);
+        Set<Authority> authoritySet = null;
+        int authorityId = Integer.parseInt("3");
+        Authority authority = authorityRepository.findByAuthorityId(authorityId).get();
+        login = user2.getLogin();
+        authoritySet = login.getAuthorities();
+        authoritySet.add(authority);
+        login.setAuthorities(authoritySet);
+        loginRepository.save(login);
         Barber barber = new Barber(barberId,barberStatus,user2);
 
         return barberRepository.save(barber);
