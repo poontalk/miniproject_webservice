@@ -70,6 +70,10 @@ public class BarberServiceImpl implements BarberService{
         barberRepository.delete(barber);
     }
 
+    @Override
+    public void deleteByTableId(String barberId) {
+        barberRepository.deleteByTableId(barberId);
+    }
 
 
     public long getBarberCount(){

@@ -16,5 +16,5 @@ public interface BarberService {
     Barber updateBarber(Barber barber);
     void deleteBarber(String barberId);
 
-
+    void deleteByTableId(String barberId);
 }

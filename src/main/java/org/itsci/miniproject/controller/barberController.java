@@ -55,7 +55,7 @@ public class barberController {
     @DeleteMapping("/delete/{barberId}")
     public ResponseEntity deleteBarber (@PathVariable("barberId")String barberId){
         try {
-            barberService.deleteBarber(barberId);
+            barberService.deleteByTableId(barberId);
             return  new ResponseEntity<>("This " + barberId + " deleted" ,HttpStatus.OK);
         }catch (Exception e){
             e.printStackTrace();
