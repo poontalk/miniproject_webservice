@@ -63,4 +63,15 @@ public class barberController {
         }
     }
 
+    @DeleteMapping("/deleteAuthority/{barberId}")
+    public ResponseEntity deleteAuthorityLogin (@PathVariable("barberId")String barberId){
+        try {
+            barberService.deleteAuthorityLoginById(barberId);
+            return  new ResponseEntity<>("This " + barberId + " deleted" ,HttpStatus.OK);
+        }catch (Exception e){
+            e.printStackTrace();
+            return  new ResponseEntity<>("Failed Delete Barber",HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

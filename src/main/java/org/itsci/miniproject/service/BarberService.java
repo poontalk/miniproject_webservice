@@ -17,4 +17,6 @@ public interface BarberService {
     void deleteBarber(String barberId);
 
     void deleteByTableId(String barberId);
+
+    void deleteAuthorityLoginById(String barberId);
 }

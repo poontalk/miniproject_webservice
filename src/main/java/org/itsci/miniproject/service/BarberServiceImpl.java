@@ -74,6 +74,31 @@ public class BarberServiceImpl implements BarberService{
     public void deleteByTableId(String barberId) {
         barberRepository.deleteByTableId(barberId);
     }
+    @Override
+    public void deleteAuthorityLoginById(String barberId){
+        Barber barber = barberRepository.getReferenceById(barberId);
+        User user = userRepository.getUserByUserId(barber.getUser().getUserId());
+        Login login = loginRepository.getLoginByLoginId(user.getLogin().getLoginId());
+
+
+        int authorityId = Integer.parseInt("3");
+        Authority authority = authorityRepository.findByAuthorityId(authorityId).get();
+
+       try {
+           authority.getLogins().remove(login);
+           login.getAuthorities().remove(authority);
+           Thread.sleep(3000);
+           loginRepository.save(login);
+           authorityRepository.save(authority);
+       }catch (InterruptedException e){
+           e.printStackTrace();
+       }
+
+
+
+//        authority.getLogins().remove(login.getAuthorities());
+//        authorityRepository.delete(authority);
+    }
 
 
     public long getBarberCount(){

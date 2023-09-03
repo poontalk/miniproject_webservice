@@ -72,6 +72,11 @@ public class LoginServiceImpl implements LoginService{
     }
 
     @Override
+    public Login getLoginByLoginId(Long loginId) {
+        return loginRepository.getLoginByLoginId(loginId);
+    }
+
+    @Override
     public LoginResponse loginUser(Login login) {
         String msg = "";
 

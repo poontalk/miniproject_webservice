@@ -26,4 +26,6 @@ public interface LoginService {
     Login findByUsername(String userName);
 
     Login assignAuthorityToLogin(Long loginId, Integer authorityId);
+
+    Login getLoginByLoginId(Long loginId);
 }
