@@ -1,6 +1,7 @@
 package org.itsci.miniproject.service;
 
 import org.itsci.miniproject.model.Barber;
+import org.itsci.miniproject.model.User;
 
 import java.util.List;
 import java.util.Map;
@@ -19,4 +20,6 @@ public interface BarberService {
     void deleteByTableId(String barberId);
 
     void deleteAuthorityLoginById(String barberId);
+
+
 }

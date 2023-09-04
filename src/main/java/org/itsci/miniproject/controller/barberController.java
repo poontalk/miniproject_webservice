@@ -1,5 +1,7 @@
 package org.itsci.miniproject.controller;
 
+import jakarta.persistence.Tuple;
+import jakarta.persistence.TupleElement;
 import org.itsci.miniproject.model.Barber;
 import org.itsci.miniproject.model.Customer;
 import org.itsci.miniproject.model.Service;
@@ -31,6 +33,8 @@ public class barberController {
             return new ResponseEntity<>("Failed List barbers!", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
 
     @RequestMapping("/add")
     public ResponseEntity addBarber(@RequestBody Map<String,String> map){

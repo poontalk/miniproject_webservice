@@ -21,4 +21,6 @@ List<User> getUsersByFirstNameContainingName(String firstName);
 
 User getUserByUSerId (String userId);
 
+    List<User> getFirstNameandLastName();
+
 }

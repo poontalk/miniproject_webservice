@@ -7,10 +7,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
+
 public interface BarberRepository extends JpaRepository<Barber,String> {
 
     @Transactional
     @Modifying
     @Query("DELETE FROM Barber e WHERE e.barberId = :id")
     void deleteByTableId(String id);
+
+
 }

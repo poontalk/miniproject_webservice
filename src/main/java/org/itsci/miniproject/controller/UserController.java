@@ -29,6 +29,18 @@ public class UserController {
             return new ResponseEntity<>("Failed List User!", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @RequestMapping("/listfirstnameandlastname")
+    public ResponseEntity getFirstNameandLastName(){
+        try {
+            List<User> users = userService.getFirstNameandLastName();
+            return new ResponseEntity<>(users, HttpStatus.OK);
+
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>("Failed List barbers!", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     @GetMapping("/getbyid/{userId}")
     public  ResponseEntity getUserById (@PathVariable("userId")String userId){
         try {

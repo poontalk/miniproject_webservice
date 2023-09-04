@@ -120,4 +120,8 @@ public class UserServiceImpl implements UserService{
     result = "U"+ result;
     return result;
     }
+    @Override
+    public List<User> getFirstNameandLastName() {
+        return userRepository.findAllByUserAndBarber();
+    }
 }

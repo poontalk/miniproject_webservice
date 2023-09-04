@@ -1,5 +1,6 @@
 package org.itsci.miniproject.service;
 
+import jakarta.persistence.criteria.Join;
 import org.itsci.miniproject.model.Authority;
 import org.itsci.miniproject.model.Barber;
 import org.itsci.miniproject.model.Login;
@@ -9,6 +10,7 @@ import org.itsci.miniproject.repository.BarberRepository;
 import org.itsci.miniproject.repository.LoginRepository;
 import org.itsci.miniproject.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -93,11 +95,6 @@ public class BarberServiceImpl implements BarberService{
        }catch (InterruptedException e){
            e.printStackTrace();
        }
-
-
-
-//        authority.getLogins().remove(login.getAuthorities());
-//        authorityRepository.delete(authority);
     }
 
 
@@ -117,4 +114,5 @@ public class BarberServiceImpl implements BarberService{
         result = "B"+ result;
         return result;
     }
+
 }
