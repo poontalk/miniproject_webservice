@@ -23,58 +23,69 @@ public class barberController {
     private BarberService barberService;
 
     @RequestMapping("/list")
-    public ResponseEntity listBarber(){
+    public ResponseEntity listBarber() {
         try {
             List<Barber> barbers = barberService.getAllBarber();
             return new ResponseEntity<>(barbers, HttpStatus.OK);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>("Failed List barbers!", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-
+    @GetMapping("/getbyid/{barberId}")
+    public ResponseEntity getBarberById(@PathVariable("barberId") String barberId) {
+        try {
+            Barber barber = barberService.getBarberById(barberId);
+            return new ResponseEntity<>(barber, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("Failed to get User by Id ", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     @RequestMapping("/add")
-    public ResponseEntity addBarber(@RequestBody Map<String,String> map){
+    public ResponseEntity addBarber(@RequestBody Map<String, String> map) {
         try {
             Barber barber = barberService.saveBarber(map);
-            return new ResponseEntity<>(barber,HttpStatus.OK);
-        }catch (Exception e){
+            return new ResponseEntity<>(barber, HttpStatus.OK);
+        } catch (Exception e) {
             e.printStackTrace();
-            return  new ResponseEntity<>("Failed Add Barber",HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Failed Add Barber", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @PutMapping("/update")
-    public ResponseEntity updateBarber(@RequestBody Barber barber){
+    public ResponseEntity updateBarber(@RequestBody Barber barber) {
         try {
             Barber updatedBarber = barberService.updateBarber(barber);
-            return new ResponseEntity<>(updatedBarber,HttpStatus.OK);
-        }catch (Exception e){
+            return new ResponseEntity<>(updatedBarber, HttpStatus.OK);
+        } catch (Exception e) {
             e.printStackTrace();
-            return  new ResponseEntity<>("Failed update Barber",HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Failed update Barber", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @DeleteMapping("/delete/{barberId}")
-    public ResponseEntity deleteBarber (@PathVariable("barberId")String barberId){
+    public ResponseEntity deleteBarber(@PathVariable("barberId") String barberId) {
         try {
             barberService.deleteByTableId(barberId);
-            return  new ResponseEntity<>("This " + barberId + " deleted" ,HttpStatus.OK);
-        }catch (Exception e){
+            return new ResponseEntity<>("This " + barberId + " deleted", HttpStatus.OK);
+        } catch (Exception e) {
             e.printStackTrace();
-            return  new ResponseEntity<>("Failed Delete Barber",HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Failed Delete Barber", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @DeleteMapping("/deleteAuthority/{barberId}")
-    public ResponseEntity deleteAuthorityLogin (@PathVariable("barberId")String barberId){
+    public ResponseEntity deleteAuthorityLogin(@PathVariable("barberId") String barberId) {
         try {
             barberService.deleteAuthorityLoginById(barberId);
-            return  new ResponseEntity<>("This " + barberId + " deleted" ,HttpStatus.OK);
-        }catch (Exception e){
+            return new ResponseEntity<>("This " + barberId + " deleted", HttpStatus.OK);
+        } catch (Exception e) {
             e.printStackTrace();
-            return  new ResponseEntity<>("Failed Delete Barber",HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Failed Delete Barber", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

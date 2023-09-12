@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Set;
 
 @Service
-public class BarberServiceImpl implements BarberService{
+public class BarberServiceImpl implements BarberService {
     @Autowired
     private BarberRepository barberRepository;
     @Autowired
@@ -39,9 +39,8 @@ public class BarberServiceImpl implements BarberService{
     }
 
 
-
     @Override
-    public Barber saveBarber(Map<String,String> map) {
+    public Barber saveBarber(Map<String, String> map) {
         Login login = new Login();
         String userId = map.get("userId");
         User user2 = userRepository.getUserByUserId(userId);
@@ -56,14 +55,16 @@ public class BarberServiceImpl implements BarberService{
         authoritySet.add(authority);
         login.setAuthorities(authoritySet);
         loginRepository.save(login);
-        Barber barber = new Barber(barberId,barberStatus,user2);
+        Barber barber = new Barber(barberId, barberStatus, user2);
 
         return barberRepository.save(barber);
     }
 
     @Override
     public Barber updateBarber(Barber barber) {
-        return barberRepository.save(barber);
+        User user2 = userRepository.getUserByUserId(barber.getUser().getUserId());
+        Barber barber1 = new Barber(barber.getBarberId(),barber.getBarberStatus(),user2);
+        return barberRepository.save(barber1);
     }
 
     @Override
@@ -76,8 +77,9 @@ public class BarberServiceImpl implements BarberService{
     public void deleteByTableId(String barberId) {
         barberRepository.deleteByTableId(barberId);
     }
+
     @Override
-    public void deleteAuthorityLoginById(String barberId){
+    public void deleteAuthorityLoginById(String barberId) {
         Barber barber = barberRepository.getReferenceById(barberId);
         User user = userRepository.getUserByUserId(barber.getUser().getUserId());
         Login login = loginRepository.getLoginByLoginId(user.getLogin().getLoginId());
@@ -86,32 +88,32 @@ public class BarberServiceImpl implements BarberService{
         int authorityId = Integer.parseInt("3");
         Authority authority = authorityRepository.findByAuthorityId(authorityId).get();
 
-       try {
-           authority.getLogins().remove(login);
-           login.getAuthorities().remove(authority);
-           Thread.sleep(3000);
-           loginRepository.save(login);
-           authorityRepository.save(authority);
-       }catch (InterruptedException e){
-           e.printStackTrace();
-       }
+        try {
+            authority.getLogins().remove(login);
+            login.getAuthorities().remove(authority);
+            Thread.sleep(3000);
+            loginRepository.save(login);
+            authorityRepository.save(authority);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 
-    public long getBarberCount(){
-        try{
+    public long getBarberCount() {
+        try {
             return barberRepository.count();
-        }catch (Exception e){
+        } catch (Exception e) {
             return 0;
         }
     }
 
-    public String generateBarberId(){
+    public String generateBarberId() {
         String result = "" + (getBarberCount() + 1);
-        while (result.length() < 4){
+        while (result.length() < 4) {
             result = "0" + result;
         }
-        result = "B"+ result;
+        result = "B" + result;
         return result;
     }
 
