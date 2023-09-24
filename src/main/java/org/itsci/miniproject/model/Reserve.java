@@ -28,7 +28,7 @@ public class Reserve {
 	private String status;
 	
 	@Column(nullable = false)
-	private double toatlPrice;
+	private double totalPrice;
 	
 	@Column(nullable = false, length = 6)
 	private LocalDateTime payDate;

@@ -1,5 +1,6 @@
 package org.itsci.miniproject.controller;
 
+import org.itsci.miniproject.model.Authority;
 import org.itsci.miniproject.model.Login;
 import org.itsci.miniproject.model.User;
 import org.itsci.miniproject.response.LoginResponse;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/login")
@@ -78,6 +80,17 @@ public class LoginController {
     public ResponseEntity getUserByContainingName(@PathVariable("userName")String userName){
         try {
             List<Login> logins = loginService.getLoginsByUserNameContainingName(userName);
+            return new ResponseEntity<>(logins, HttpStatus.OK);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>("Failed to get User by Name",HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/getbyUsername/{userName}")
+    public ResponseEntity getLoginByUsername(@PathVariable("userName")String userName){
+        try {
+            Login logins = loginService.findByUsername(userName);
             return new ResponseEntity<>(logins, HttpStatus.OK);
         }catch (Exception e){
             e.printStackTrace();

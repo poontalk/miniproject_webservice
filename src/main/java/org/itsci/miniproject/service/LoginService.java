@@ -13,15 +13,15 @@ public interface LoginService {
 
     Login getLoginById(String loginId);
 
-    Login saveLogin(Map<String ,String> map);
+    Login saveLogin(Map<String, String> map);
 
     Login updateLogin(Login login);
 
     void deleteLogin(String loginId);
 
-    List<Login> getLoginsByUserNameContainingName (String userName);
+    List<Login> getLoginsByUserNameContainingName(String userName);
 
-    LoginResponse loginUser (Login login);
+    LoginResponse loginUser(Login login);
 
     Login findByUsername(String userName);
 

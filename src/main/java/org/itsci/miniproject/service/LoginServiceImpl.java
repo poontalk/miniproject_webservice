@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
-public class LoginServiceImpl implements LoginService{
+public class LoginServiceImpl implements LoginService {
     @Autowired
     private LoginRepository loginRepository;
 
@@ -35,7 +35,7 @@ public class LoginServiceImpl implements LoginService{
     public Login saveLogin(Map<String, String> map) {
         String userName = map.get("username");
         String password = map.get("password");
-        Login logins = new Login(userName,password);
+        Login logins = new Login(userName, password);
         return loginRepository.save(logins);
     }
 
@@ -56,7 +56,7 @@ public class LoginServiceImpl implements LoginService{
     }
 
     @Override
-    public Login findByUsername(String userName){
+    public Login findByUsername(String userName) {
         return loginRepository.findByUsername(userName);
     }
 
@@ -71,6 +71,7 @@ public class LoginServiceImpl implements LoginService{
         return loginRepository.save(login);
     }
 
+
     @Override
     public Login getLoginByLoginId(Long loginId) {
         return loginRepository.getLoginByLoginId(loginId);
@@ -82,22 +83,21 @@ public class LoginServiceImpl implements LoginService{
 
         Login login1 = loginRepository.findByUsername(login.getUsername());
 
-        if (login1 != null){
+        if (login1 != null) {
             String password = login.getPassword();
             String encodePassword = login1.getPassword();
-            if (password.equals(encodePassword)){
-                Optional<Login> login2 = loginRepository.findOneByUsernameAndPassword(login.getUsername(),login.getPassword());
-               if(login2.isPresent()){
-                    return new LoginResponse("Login Success " ,true);
-               }else {
+            if (password.equals(encodePassword)) {
+                Optional<Login> login2 = loginRepository.findOneByUsernameAndPassword(login.getUsername(), login.getPassword());
+                if (login2.isPresent()) {
+                    return new LoginResponse("Login Success ", true);
+                } else {
                     return new LoginResponse("Login failed", false);
-               }
-            }else {
+                }
+            } else {
                 return new LoginResponse("password Not Match", false);
             }
-        }
-        else{
-            return new LoginResponse("Email not exits",false);
+        } else {
+            return new LoginResponse("Email not exits", false);
         }
     }
 
