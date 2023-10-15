@@ -6,6 +6,7 @@ import org.itsci.miniproject.repository.AuthorityRepository;
 import org.itsci.miniproject.repository.LoginRepository;
 import org.itsci.miniproject.response.LoginResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -18,8 +19,8 @@ public class LoginServiceImpl implements LoginService {
     @Autowired
     private AuthorityRepository authorityRepository;
 
-//    @Autowired
-//    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public List<Login> getAllLogins() {
@@ -60,6 +61,8 @@ public class LoginServiceImpl implements LoginService {
         return loginRepository.findByUsername(userName);
     }
 
+
+
     @Override
     public Login assignAuthorityToLogin(Long loginId, Integer authorityId) {
         Set<Authority> authoritySet = null;
@@ -86,8 +89,9 @@ public class LoginServiceImpl implements LoginService {
         if (login1 != null) {
             String password = login.getPassword();
             String encodePassword = login1.getPassword();
-            if (password.equals(encodePassword)) {
-                Optional<Login> login2 = loginRepository.findOneByUsernameAndPassword(login.getUsername(), login.getPassword());
+            Boolean isPwdRight = passwordEncoder.matches(password,encodePassword);
+            if (isPwdRight) {
+                Optional<Login> login2 = loginRepository.findOneByUsernameAndPassword(login.getUsername(), encodePassword);
                 if (login2.isPresent()) {
                     return new LoginResponse("Login Success ", true);
                 } else {
@@ -97,7 +101,7 @@ public class LoginServiceImpl implements LoginService {
                 return new LoginResponse("password Not Match", false);
             }
         } else {
-            return new LoginResponse("Email not exits", false);
+            return new LoginResponse("UserName not exits", false);
         }
     }
 

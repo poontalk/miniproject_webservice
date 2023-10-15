@@ -57,7 +57,7 @@ public class barberController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity updateBarber(@RequestBody Barber barber) {
+    public ResponseEntity doEditBarber(@RequestBody Barber barber) {
         try {
             Barber updatedBarber = barberService.updateBarber(barber);
             return new ResponseEntity<>(updatedBarber, HttpStatus.OK);

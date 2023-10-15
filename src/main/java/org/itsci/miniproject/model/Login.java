@@ -3,6 +3,7 @@ package org.itsci.miniproject.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -26,7 +27,7 @@ public class Login {
 	@Column(nullable = false,length = 60)
 	private String password;
 
-	@JsonManagedReference
+	//@JsonManagedReference
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(
 	  name = "authority_login", 

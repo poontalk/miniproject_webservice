@@ -7,6 +7,7 @@ import org.itsci.miniproject.response.LoginResponse;
 import org.itsci.miniproject.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -98,8 +99,8 @@ public class LoginController {
         }
     }
 
-    @PostMapping("/loginUserName")
-    public ResponseEntity<?> loginUser(@RequestBody Login login)
+    @PostMapping(path = "/loginUserName" ,consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> doLoginMember(@RequestBody Login login)
     {
         LoginResponse loginResponse = loginService.loginUser(login);
         return ResponseEntity.ok(loginResponse);

@@ -9,6 +9,7 @@ import org.itsci.miniproject.repository.CustomerRepository;
 import org.itsci.miniproject.repository.LoginRepository;
 import org.itsci.miniproject.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -26,6 +27,8 @@ public class UserServiceImpl implements UserService{
     private AuthorityRepository authorityRepository;
     @Autowired
     private CustomerRepository customerRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 @Override
     public List<User> getAllUsers() {
@@ -50,7 +53,7 @@ public class UserServiceImpl implements UserService{
         String userName = map.get("username");
         String password = map.get("password");
         login.setUsername(userName);
-        login.setPassword(password);
+        login.setPassword(this.passwordEncoder.encode(password));
         loginRepository.save(login);
 
         Set<Authority> authoritySet = null;
@@ -123,5 +126,10 @@ public class UserServiceImpl implements UserService{
     @Override
     public List<User> getFirstNameandLastName() {
         return userRepository.findAllByUserAndBarber();
+    }
+
+    @Override
+    public User getUserByLoginId(Long loginId) {
+        return userRepository.getUserByLoginLoginId(loginId);
     }
 }

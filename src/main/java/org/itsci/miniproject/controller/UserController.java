@@ -19,7 +19,7 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping("/list")
-    public ResponseEntity listUser(){
+    public ResponseEntity getListAllMembers(){
         try {
             List<User> users = userService.getAllUsers();
             return new ResponseEntity<>(users, HttpStatus.OK);
@@ -31,7 +31,7 @@ public class UserController {
     }
 
     @RequestMapping("/listfirstnameandlastname")
-    public ResponseEntity getFirstNameandLastName(){
+    public ResponseEntity getFirstNameAndLastName(){
         try {
             List<User> users = userService.getFirstNameandLastName();
             return new ResponseEntity<>(users, HttpStatus.OK);
@@ -53,7 +53,7 @@ public class UserController {
     }
 
     @RequestMapping("/add")
-    public ResponseEntity addUser(@RequestBody Map<String,String> map){
+    public ResponseEntity doRegister(@RequestBody Map<String,String> map){
         try {
             User user = userService.saveUser(map);
             return new ResponseEntity<>(user,HttpStatus.OK);
@@ -64,7 +64,7 @@ public class UserController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity updateUser(@RequestBody User user){
+    public ResponseEntity doEditProfile (@RequestBody User user){
         try {
             User updatedUser = userService.updateUser(user);
             return new ResponseEntity<>(updatedUser,HttpStatus.OK);
@@ -92,6 +92,17 @@ public class UserController {
         }catch (Exception e){
             e.printStackTrace();
             return new ResponseEntity<>("Failed to get User by Name",HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+        @GetMapping("/getuserbylogin/{loginId}")
+    public ResponseEntity getUserByLoginId(@PathVariable("loginId")Long loginId){
+        try {
+            User user = userService.getUserByLoginId(loginId);
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>("Failed to get User by LoginId",HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

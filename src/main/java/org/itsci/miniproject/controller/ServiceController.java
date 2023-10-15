@@ -18,7 +18,7 @@ public class ServiceController {
     private ServicesService servicesService;
 
     @RequestMapping("/list")
-    public ResponseEntity listService(){
+    public ResponseEntity geyListService(){
         try {
             List<Service> services = servicesService.getAllServices();
             return new ResponseEntity<>(services, HttpStatus.OK);
@@ -52,7 +52,7 @@ public class ServiceController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity updateService(@RequestBody Service service){
+    public ResponseEntity editService(@RequestBody Service service){
         try {
             Service updatedService = servicesService.updateService(service);
             return new ResponseEntity<>(updatedService,HttpStatus.OK);
@@ -63,7 +63,7 @@ public class ServiceController {
     }
 
     @DeleteMapping("/delete/{serviceId}")
-    public ResponseEntity deleteService (@PathVariable("serviceId")String serviceId){
+    public ResponseEntity doDeleteService (@PathVariable("serviceId")String serviceId){
         try {
             servicesService.deleteService(serviceId);
             return  new ResponseEntity<>("This" + serviceId + "deleted" ,HttpStatus.OK);

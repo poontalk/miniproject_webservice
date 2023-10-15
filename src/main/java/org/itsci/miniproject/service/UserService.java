@@ -23,4 +23,6 @@ User getUserByUSerId (String userId);
 
     List<User> getFirstNameandLastName();
 
+    User getUserByLoginId (Long loginId);
+
 }
