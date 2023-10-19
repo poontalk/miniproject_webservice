@@ -110,4 +110,6 @@ public class LoginController {
     public Login assignAuthorityToLogin(@PathVariable Long loginId, @PathVariable Integer authorityId){
         return loginService.assignAuthorityToLogin(loginId,authorityId);
     }
+
+
 }

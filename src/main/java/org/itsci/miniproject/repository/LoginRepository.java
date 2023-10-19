@@ -21,4 +21,6 @@ public interface LoginRepository extends JpaRepository<Login,String> {
 
     Login getLoginByLoginId(Long loginId);
 
+
+
 }

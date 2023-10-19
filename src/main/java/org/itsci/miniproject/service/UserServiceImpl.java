@@ -70,7 +70,29 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User updateUser(User user) {
+    public User updateUser(Map<String, String> map) {
+        String UId = map.get("userId");
+        String firstname = map.get("firstName");
+        String lastname = map.get("lastName");
+        String address = map.get("address");
+        String email = map.get("email");
+        String tel = map.get("mobileNo");
+        String Lid = map.get("loginId");
+        String username =  map.get("userName");
+        String password = map.get("password");
+        Login login = loginRepository.getLoginByLoginId(Long.parseLong(Lid));
+        login.setUsername(username);
+        login.setPassword(this.passwordEncoder.encode(password));
+        loginRepository.save(login);
+
+        //User user1 = new User(UId,firstname,lastname,address,email,tel,login);
+
+        User user = userRepository.getUserByUserId(UId);
+        user.setFirstName(firstname);
+        user.setLastName(lastname);
+        user.setAddress(address);
+        user.setMobileNo(tel);
+        user.setEmail(email);
         return userRepository.save(user);
     }
 
@@ -131,5 +153,21 @@ public class UserServiceImpl implements UserService{
     @Override
     public User getUserByLoginId(Long loginId) {
         return userRepository.getUserByLoginLoginId(loginId);
+    }
+
+    @Override
+    public void doEditProfile( Map<String, String> map) {
+    String UId = map.get("userId");
+    String firstname = map.get("firstName");
+    String lastname = map.get("lastName");
+    String address = map.get("address");
+    String email = map.get("email");
+    String tel = map.get("mobileNo");
+
+        userRepository.doEditProfile(UId,firstname,lastname,address,email,tel);
+    }
+    @Override
+    public List<User> getUsersByRole(String role,String role2) {
+        return userRepository.findUsersByRole(role,role2);
     }
 }

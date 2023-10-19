@@ -3,6 +3,7 @@ package org.itsci.miniproject.controller;
 import org.itsci.miniproject.model.User;
 import org.itsci.miniproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -63,16 +64,28 @@ public class UserController {
         }
     }
 
-    @PutMapping("/update")
-    public ResponseEntity doEditProfile (@RequestBody User user){
+    @PutMapping("/updateNoPassword")
+    public ResponseEntity doEditProfileNoChangePassword (@RequestBody Map<String,String> map){
         try {
-            User updatedUser = userService.updateUser(user);
+            userService.doEditProfile(map);
+            return new ResponseEntity<>(map,HttpStatus.OK);
+        }catch (Exception e){
+            e.printStackTrace();
+            return  new ResponseEntity<>("Failed update User",HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity doEditProfile (@RequestBody Map<String,String> map){
+        try {
+            User updatedUser = userService.updateUser(map);
             return new ResponseEntity<>(updatedUser,HttpStatus.OK);
         }catch (Exception e){
             e.printStackTrace();
             return  new ResponseEntity<>("Failed update User",HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @DeleteMapping("/delete/{userId}")
     public ResponseEntity deleteUser (@PathVariable("userId")String userId){
         try {
@@ -106,6 +119,15 @@ public class UserController {
         }
     }
 
-
+    @GetMapping("getRolebyrole/{role}/{role2}")
+    public ResponseEntity getRoleByLoginId(@PathVariable("role")String role,@PathVariable("role2")String role2){
+        try {
+            List<User> users = userService.getUsersByRole(role,role2);
+            return new ResponseEntity<>(users, HttpStatus.OK);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>("failed to get Role",HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 }

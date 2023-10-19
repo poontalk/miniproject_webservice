@@ -1,11 +1,13 @@
 package org.itsci.miniproject.service;
 
+import org.itsci.miniproject.model.Authority;
 import org.itsci.miniproject.model.Login;
 import org.itsci.miniproject.model.User;
 import org.itsci.miniproject.response.LoginResponse;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public interface LoginService {
 
@@ -28,4 +30,6 @@ public interface LoginService {
     Login assignAuthorityToLogin(Long loginId, Integer authorityId);
 
     Login getLoginByLoginId(Long loginId);
+
+    Set<Authority> getRoleOfLoginId(Long loginId);
 }

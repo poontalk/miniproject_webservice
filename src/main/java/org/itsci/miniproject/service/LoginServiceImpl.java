@@ -74,6 +74,15 @@ public class LoginServiceImpl implements LoginService {
         return loginRepository.save(login);
     }
 
+    @Override
+    public Set<Authority> getRoleOfLoginId(Long loginId) {
+        Login login = loginRepository.findByLoginId(loginId).orElse(null);
+        if (login != null) {
+            return login.getAuthorities();
+        }
+        return new HashSet<>();
+    }
+
 
     @Override
     public Login getLoginByLoginId(Long loginId) {

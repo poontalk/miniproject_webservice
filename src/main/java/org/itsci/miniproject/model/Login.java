@@ -40,6 +40,12 @@ public class Login {
 		this.password = password;
 	}
 
+	public Login(Long loginId, String username, String password) {
+		this.loginId = loginId;
+		this.username = username;
+		this.password = password;
+	}
+
 	@Override
 	public String toString(){
 		return "CustomerDTO {" +
