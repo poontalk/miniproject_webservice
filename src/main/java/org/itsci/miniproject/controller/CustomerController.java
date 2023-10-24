@@ -61,4 +61,15 @@ public class CustomerController {
             return  new ResponseEntity<>("Failed Delete Customer",HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/getbyuserid/{userId}")
+    public  ResponseEntity getCustomerByUserId (@PathVariable("userId")String userId){
+        try {
+            Customer customer = customerService.getCustomerByUserId(userId);
+            return new ResponseEntity<>(customer,HttpStatus.OK);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>("Failed to get Customer by Id ", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

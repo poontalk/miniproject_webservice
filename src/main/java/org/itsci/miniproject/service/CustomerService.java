@@ -18,4 +18,6 @@ public interface CustomerService {
     Customer updateCustomer(Customer customer);
 
     void deleteCustomer(String customerId);
+
+    Customer getCustomerByUserId(String userId);
 }

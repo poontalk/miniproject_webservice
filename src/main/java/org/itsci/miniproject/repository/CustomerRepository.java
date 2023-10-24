@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface CustomerRepository extends JpaRepository<Customer,String> {
 
-
+    Customer getCustomerByUserId (String userId);
 }

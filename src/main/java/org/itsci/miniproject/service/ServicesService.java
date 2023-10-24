@@ -17,4 +17,6 @@ public interface ServicesService {
     void deleteService(String serviceId);
 
     List<Service> getServicesByServiceNameContainingName(String serviceName);
+
+    Service getServiceByName(String serviceName);
 }

@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface ServiceRepository extends JpaRepository<Service,String> {
     List<Service> getServicesByServiceNameContainingIgnoreCase(String serviceName);
+
+    Service getServiceByServiceName(String serviceName);
 }

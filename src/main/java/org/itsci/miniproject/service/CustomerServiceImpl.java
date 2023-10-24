@@ -39,4 +39,9 @@ public class CustomerServiceImpl implements CustomerService{
         Customer customer = customerRepository.getReferenceById(customerId);
         customerRepository.delete(customer);
     }
+
+    @Override
+    public Customer getCustomerByUserId(String userId) {
+        return customerRepository.getCustomerByUserId(userId);
+    }
 }

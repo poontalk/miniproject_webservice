@@ -12,7 +12,6 @@ public interface UserService {
     User updateUser (Map<String, String> map);
     void deleteUser(String userId);
     List<User> getUsersByFirstNameContainingName(String firstName);
-    User getUserByUSerId (String userId);
     List<User> getFirstNameandLastName();
     User getUserByLoginId (Long loginId);
     void doEditProfile(Map<String,String> map);

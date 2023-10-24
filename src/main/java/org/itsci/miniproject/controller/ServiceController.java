@@ -40,6 +40,17 @@ public class ServiceController {
         }
     }
 
+    @GetMapping("/getbyName/{serviceName}")
+    public  ResponseEntity getServiceByName (@PathVariable("serviceName")String serviceName){
+        try {
+            Service service = servicesService.getServiceByName(serviceName);
+            return new ResponseEntity<>(service,HttpStatus.OK);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>("Failed to get service by Id ", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @RequestMapping("/add")
     public ResponseEntity addService(@RequestBody Map<String,String> map){
         try {

@@ -107,11 +107,6 @@ public class UserServiceImpl implements UserService{
         return userRepository.getUsersByFirstNameContainingIgnoreCase(firstName);
     }
 
-    @Override
-    public User getUserByUSerId(String userId) {
-        return userRepository.getUserByUserId(userId);
-    }
-
     public long getCustomerCount(){
         try{
             return customerRepository.count();

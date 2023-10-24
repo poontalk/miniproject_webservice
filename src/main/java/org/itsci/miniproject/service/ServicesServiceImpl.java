@@ -50,6 +50,11 @@ public class ServicesServiceImpl implements ServicesService{
         return serviceRepository.getServicesByServiceNameContainingIgnoreCase(serviceName);
     }
 
+    @Override
+    public Service getServiceByName(String serviceName) {
+        return serviceRepository.getServiceByServiceName(serviceName);
+    }
+
     public long getAccountCount(){
         try{
             return serviceRepository.count();
