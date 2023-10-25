@@ -43,9 +43,9 @@ public class ReserveDetailServiceImpl implements ReserveDetailService{
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         String reserveDetailId = generateReserveDetailId();
         org.itsci.miniproject.model.Service serviceModel = serviceRepository.getServiceByServiceName(map.get("serviceName"));
-        LocalDateTime scheduleDate = LocalDateTime.parse(map.get("scheduleDate")+" "+"00:00", formatter);
+        LocalDateTime scheduleTime = LocalDateTime.parse(map.get("scheduleDate")+" "+map.get("time"), formatter);
         Reserve reserve = reserveRepository.getReferenceById(reserveId);
-        ReserveDetail reserveDetail = new ReserveDetail(reserveDetailId,serviceModel.getPrice(),scheduleDate,serviceModel.getTimespend(),reserve,serviceModel);
+        ReserveDetail reserveDetail = new ReserveDetail(reserveDetailId,serviceModel.getPrice(),scheduleTime,serviceModel.getTimespend(),reserve,serviceModel);
         return reserveDetailRepository.save(reserveDetail);
     }
 
@@ -58,6 +58,11 @@ public class ReserveDetailServiceImpl implements ReserveDetailService{
     public void deleteReserveDetail(String reserveDetailId) {
         ReserveDetail reserveDetail = reserveDetailRepository.getReferenceById(reserveDetailId);
         reserveDetailRepository.delete(reserveDetail);
+    }
+
+    @Override
+    public List<ReserveDetail> findReserveDetailByReserveId(String reserveId) {
+        return reserveDetailRepository.findReserveDetailByReserve_ReserveId(reserveId);
     }
 
     public long getReserveDetailCount(){

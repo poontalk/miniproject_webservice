@@ -16,4 +16,6 @@ public interface ReserveService {
     Reserve updateReserve (Reserve reserve);
 
     void deleteReserve(String reserveId);
+
+    List<Reserve> findReserveByStatusAndCustomerId(String status,String customerId);
 }

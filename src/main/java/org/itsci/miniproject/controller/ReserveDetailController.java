@@ -71,4 +71,15 @@ public class ReserveDetailController {
             return  new ResponseEntity<>("Failed Delete ReserveDetail",HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/getbyreserveId/{reserveId}")
+    public  ResponseEntity getReserveDetailByReserveId (@PathVariable("reserveId")String reserveId){
+        try {
+            List<ReserveDetail> reserveDetails = reserveDetailService.findReserveDetailByReserveId(reserveId);
+            return new ResponseEntity<>(reserveDetails,HttpStatus.OK);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>("Failed to get ReserveDetail by reserve Id ", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

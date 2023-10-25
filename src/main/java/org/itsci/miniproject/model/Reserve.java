@@ -37,7 +37,7 @@ public class Reserve {
 	private String receiptId;
 	
 	@Column(nullable = false, length =45)
-	private LocalDateTime SchduleTime;
+	private LocalDateTime ScheduleDate;
 	
 	@ManyToOne(cascade = CascadeType.ALL,optional = false)
     @JoinColumn(name = "barberId")

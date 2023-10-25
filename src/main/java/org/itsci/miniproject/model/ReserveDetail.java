@@ -24,7 +24,7 @@ public class ReserveDetail {
 	private double sumPrice;
 	
 	@Column(nullable = false, length = 40)
-	private LocalDateTime scheduleDate;	
+	private LocalDateTime scheduleTime;
 	
 	@Column(nullable = false, length = 10)
 	private Integer sumTimeSpend;

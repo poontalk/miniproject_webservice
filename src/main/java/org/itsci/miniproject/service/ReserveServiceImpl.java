@@ -3,8 +3,10 @@ package org.itsci.miniproject.service;
 import org.itsci.miniproject.model.Barber;
 import org.itsci.miniproject.model.Customer;
 import org.itsci.miniproject.model.Reserve;
+import org.itsci.miniproject.model.ReserveDetail;
 import org.itsci.miniproject.repository.BarberRepository;
 import org.itsci.miniproject.repository.CustomerRepository;
+import org.itsci.miniproject.repository.ReserveDetailRepository;
 import org.itsci.miniproject.repository.ReserveRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,8 @@ public class ReserveServiceImpl implements ReserveService{
     private CustomerRepository customerRepository;
     @Autowired
     private BarberRepository barberRepository;
+    @Autowired
+    private ReserveDetailRepository reserveDetailRepository;
 
     @Override
     public List<Reserve> getAllReserves() {
@@ -42,16 +46,14 @@ public class ReserveServiceImpl implements ReserveService{
         String formattedDateTime = dT.format(formatter);
         String reserveId = generateReserveId();
         String status = "ongoing";
-        String sTime = map.get("reserveDate")+" "+ map.get("scheduleTime");
-        System.out.println(sTime);
         LocalDateTime reserveDate = LocalDateTime.parse(formattedDateTime, formatter);
         LocalDateTime payDate = LocalDateTime.parse(map.get("reserveDate")+" "+"00:00", formatter);
         String receiptId = generateReceiptId();
         Customer customer = customerRepository.getCustomerByUserId(map.get("userId"));
-        LocalDateTime scheduleTime = LocalDateTime.parse(map.get("reserveDate")+" "+ map.get("scheduleTime"),formatter);
+        LocalDateTime scheduleDate = LocalDateTime.parse(map.get("reserveDate")+" "+ "00:00",formatter);
         double totalPrice = Double.parseDouble(map.get("price"));
         Barber barberId = barberRepository.getReferenceById("B0001");
-        Reserve reserve = new Reserve(reserveId,reserveDate,status,totalPrice,payDate,receiptId,scheduleTime,barberId,customer);
+        Reserve reserve = new Reserve(reserveId,reserveDate,status,totalPrice,payDate,receiptId,scheduleDate,barberId,customer);
         return reserveRepository.save(reserve);
     }
 
@@ -63,7 +65,17 @@ public class ReserveServiceImpl implements ReserveService{
     @Override
     public void deleteReserve(String reserveId) {
         Reserve reserve = reserveRepository.getReferenceById(reserveId);
-        reserveRepository.delete(reserve);
+        List<ReserveDetail> reserveDetail = reserveDetailRepository.findReserveDetailByReserve_ReserveId(reserveId);
+        for (ReserveDetail detail : reserveDetail) {
+            reserveDetailRepository.deleteByTable(detail.getReservedetailId());
+        }
+         reserveRepository.deleteByReserveTable(reserve.getReserveId());
+    }
+
+    @Override
+    public List<Reserve> findReserveByStatusAndCustomerId(String status, String customerId) {
+        //String inStatusNow = "ongoing";
+        return reserveRepository.findByStatusAndCustomer_UserId(status,customerId);
     }
 
     public long getReserveCount(){
