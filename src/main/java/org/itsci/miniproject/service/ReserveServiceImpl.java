@@ -73,9 +73,8 @@ public class ReserveServiceImpl implements ReserveService{
     }
 
     @Override
-    public List<Reserve> findReserveByStatusAndCustomerId(String status, String customerId) {
-        //String inStatusNow = "ongoing";
-        return reserveRepository.findByStatusAndCustomer_UserId(status,customerId);
+    public List<Reserve> findReserveByStatusAndCustomerId(String customerId) {
+            return reserveRepository.findOngoingOrReservedByCustomerId(customerId);
     }
 
     public long getReserveCount(){

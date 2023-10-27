@@ -10,8 +10,9 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface ReserveRepository extends JpaRepository<Reserve,String> {
+    @Query("SELECT r FROM Reserve r WHERE (r.status = 'ongoing' OR r.status = 'reserved' )AND r.customer.userId = :customerId")
+    List<Reserve> findOngoingOrReservedByCustomerId(@Param("customerId") String customerId);
     List<Reserve> findByStatusAndCustomer_UserId(String status, String customerId);
-
     @Transactional
     @Modifying
     @Query("DELETE FROM Reserve e WHERE e.reserveId = :id")

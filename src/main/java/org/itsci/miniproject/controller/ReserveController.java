@@ -73,10 +73,10 @@ public class ReserveController {
         }
     }
 
-    @GetMapping("/getbyReserve/{status}/{customerId}")
-    public  ResponseEntity getReserveByCustomer (@PathVariable("status")String status , @PathVariable("customerId")String customerId){
+    @GetMapping("/getbyReserve/{customerId}")
+    public  ResponseEntity getReserveByCustomer ( @PathVariable("customerId")String customerId){
         try {
-            List<Reserve> reserve = reserveService.findReserveByStatusAndCustomerId(status,customerId);
+            List<Reserve> reserve = reserveService.findReserveByStatusAndCustomerId(customerId);
             return new ResponseEntity<>(reserve,HttpStatus.OK);
         }catch (Exception e){
             e.printStackTrace();
