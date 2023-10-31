@@ -52,8 +52,8 @@ public class ReserveServiceImpl implements ReserveService{
         Customer customer = customerRepository.getCustomerByUserId(map.get("userId"));
         LocalDateTime scheduleDate = LocalDateTime.parse(map.get("reserveDate")+" "+ "00:00",formatter);
         double totalPrice = Double.parseDouble(map.get("price"));
-        Barber barberId = barberRepository.getReferenceById("B0001");
-        Reserve reserve = new Reserve(reserveId,reserveDate,status,totalPrice,payDate,receiptId,scheduleDate,barberId,customer);
+        //Barber barberId = barberRepository.getReferenceById("B0001");
+        Reserve reserve = new Reserve(reserveId,reserveDate,status,totalPrice,payDate,receiptId,scheduleDate,null,customer);
         return reserveRepository.save(reserve);
     }
 
@@ -75,6 +75,11 @@ public class ReserveServiceImpl implements ReserveService{
     @Override
     public List<Reserve> findReserveByStatusAndCustomerId(String customerId) {
             return reserveRepository.findOngoingOrReservedByCustomerId(customerId);
+    }
+
+    @Override
+    public List<Reserve> findReserveForBarber() {
+        return reserveRepository.findOngoingOrReserve();
     }
 
     public long getReserveCount(){

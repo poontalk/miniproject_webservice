@@ -65,6 +65,11 @@ public class ReserveDetailServiceImpl implements ReserveDetailService{
         return reserveDetailRepository.findReserveDetailByReserve_ReserveId(reserveId);
     }
 
+    @Override
+    public List<ReserveDetail> findReserveDetailByStatus() {
+        return reserveDetailRepository.findOngoingReserveDetails();
+    }
+
     public long getReserveDetailCount(){
         try{
             return reserveDetailRepository.count();

@@ -82,4 +82,16 @@ public class ReserveDetailController {
             return new ResponseEntity<>("Failed to get ReserveDetail by reserve Id ", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/listreservedetailbystatus")
+    public ResponseEntity listReserveDetailByStatus(){
+        try {
+            List<ReserveDetail> reserveDetails = reserveDetailService.findReserveDetailByStatus();
+            return new ResponseEntity<>(reserveDetails, HttpStatus.OK);
+        }catch (Exception e){
+
+            e.printStackTrace();
+            return new ResponseEntity<>("Failed get List", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

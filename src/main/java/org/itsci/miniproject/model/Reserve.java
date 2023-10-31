@@ -39,7 +39,7 @@ public class Reserve {
 	@Column(nullable = false, length =45)
 	private LocalDateTime ScheduleDate;
 	
-	@ManyToOne(cascade = CascadeType.ALL,optional = false)
+	@ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "barberId")
     private Barber barber;
 	

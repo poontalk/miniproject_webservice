@@ -16,4 +16,7 @@ public interface ReserveDetailRepository extends JpaRepository<ReserveDetail, St
     @Modifying
     @Query("DELETE FROM ReserveDetail e WHERE e.reservedetailId = :id")
     void deleteByTable(String id);
+
+    @Query("SELECT rd FROM ReserveDetail rd WHERE rd.reserve.status = 'ongoing' or rd.reserve.status = 'reserved'")
+    List<ReserveDetail> findOngoingReserveDetails();
 }

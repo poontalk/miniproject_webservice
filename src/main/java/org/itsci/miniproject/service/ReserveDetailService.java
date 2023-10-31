@@ -19,4 +19,6 @@ public interface ReserveDetailService {
     void deleteReserveDetail(String reserveDetailId);
 
     List<ReserveDetail> findReserveDetailByReserveId(String reserveId);
+
+    List<ReserveDetail> findReserveDetailByStatus();
 }

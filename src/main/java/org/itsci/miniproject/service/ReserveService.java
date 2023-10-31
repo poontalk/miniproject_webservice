@@ -18,4 +18,6 @@ public interface ReserveService {
     void deleteReserve(String reserveId);
 
     List<Reserve> findReserveByStatusAndCustomerId(String customerId);
+
+    List<Reserve> findReserveForBarber();
 }
