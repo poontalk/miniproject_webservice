@@ -95,4 +95,28 @@ public class ReserveController {
             return new ResponseEntity<>("Failed get List", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/listforcustomer/{customerId}")
+    public ResponseEntity listReserveForBarber(@PathVariable("customerId") String customerId){
+        try {
+            List<Reserve> reserves = reserveService.getReserveByCustomerId(customerId);
+            return new ResponseEntity<>(reserves, HttpStatus.OK);
+        }catch (Exception e){
+
+            e.printStackTrace();
+            return new ResponseEntity<>("Failed get List", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/getReceipt/{receiptId}")
+    public ResponseEntity getReceipt(@PathVariable("receiptId") String receiptId){
+        try {
+            Reserve reserves = reserveService.getReceipt(receiptId);
+            return new ResponseEntity<>(reserves, HttpStatus.OK);
+        }catch (Exception e){
+
+            e.printStackTrace();
+            return new ResponseEntity<>("Failed get List", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

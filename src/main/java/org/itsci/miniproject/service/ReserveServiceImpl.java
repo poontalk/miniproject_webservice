@@ -82,6 +82,16 @@ public class ReserveServiceImpl implements ReserveService{
         return reserveRepository.findOngoingOrReserve();
     }
 
+    @Override
+    public List<Reserve> getReserveByCustomerId(String customerId) {
+        return reserveRepository.getReservesByCustomerCustomerId(customerId);
+    }
+
+    @Override
+    public Reserve getReceipt(String receiptId) {
+        return reserveRepository.findByReceiptId(receiptId);
+    }
+
     public long getReserveCount(){
         try{
             return reserveRepository.count();

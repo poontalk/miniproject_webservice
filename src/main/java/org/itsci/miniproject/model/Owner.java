@@ -28,7 +28,7 @@ public class Owner extends User{
 	@Column(nullable = false, length = 6)
 	private LocalDateTime closeTime;
 	
-	@Column(nullable = false, length = 6)
+	@Column(length = 6)
 	private LocalDateTime dayOff;
 	
 	@Column(nullable = false, length = 6)

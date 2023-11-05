@@ -19,4 +19,8 @@ public interface ReserveRepository extends JpaRepository<Reserve,String> {
     void deleteByReserveTable(String id);
     @Query("SELECT r FROM Reserve r WHERE r.status = 'ongoing' OR r.status = 'reserved' ")
     List<Reserve> findOngoingOrReserve();
+    @Query("SELECT r FROM Reserve r WHERE r.status = 'complete' AND r.customer.userId = :customerId")
+    List<Reserve> getReservesByCustomerCustomerId(String customerId);
+
+    Reserve findByReceiptId(String receiptId);
 }

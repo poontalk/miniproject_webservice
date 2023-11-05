@@ -20,4 +20,8 @@ public interface ReserveService {
     List<Reserve> findReserveByStatusAndCustomerId(String customerId);
 
     List<Reserve> findReserveForBarber();
+
+    List<Reserve> getReserveByCustomerId(String customerId);
+
+    Reserve getReceipt(String receiptId);
 }
