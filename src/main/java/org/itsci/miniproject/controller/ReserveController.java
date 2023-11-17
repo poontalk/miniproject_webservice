@@ -119,4 +119,26 @@ public class ReserveController {
             return new ResponseEntity<>("Failed get List", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @PatchMapping("/confirmpayment/{reserveId}")
+    public ResponseEntity doConfirmPayment(@PathVariable("reserveId") String reserveId){
+        try {
+            Reserve updatedReserve = reserveService.updateConfirmPayment(reserveId);
+            return new ResponseEntity<>(updatedReserve,HttpStatus.OK);
+        }catch (Exception e){
+            e.printStackTrace();
+            return  new ResponseEntity<>("Failed update Reserve",HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PatchMapping("/canceljob/{reserveId}")
+    public ResponseEntity cancelJob(@PathVariable("reserveId") String reserveId){
+        try {
+            Reserve updatedReserve = reserveService.cancelJob(reserveId);
+            return new ResponseEntity<>(updatedReserve,HttpStatus.OK);
+        }catch (Exception e){
+            e.printStackTrace();
+            return  new ResponseEntity<>("Failed update Reserve",HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

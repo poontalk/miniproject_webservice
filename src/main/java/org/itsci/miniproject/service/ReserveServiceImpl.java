@@ -10,6 +10,8 @@ import org.itsci.miniproject.repository.ReserveDetailRepository;
 import org.itsci.miniproject.repository.ReserveRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -45,13 +47,13 @@ public class ReserveServiceImpl implements ReserveService{
         LocalDateTime dT = LocalDateTime.now();
         String formattedDateTime = dT.format(formatter);
         String reserveId = generateReserveId();
-        String status = "ongoing";
+        String status = "reserved";
         LocalDateTime reserveDate = LocalDateTime.parse(formattedDateTime, formatter);
-        LocalDateTime payDate = LocalDateTime.parse(map.get("reserveDate")+" "+"00:00", formatter);
+        LocalDateTime payDate = LocalDateTime.parse(map.get("scheduleDate")+" "+"00:00", formatter);
         String receiptId = generateReceiptId();
         Customer customer = customerRepository.getCustomerByUserId(map.get("userId"));
-        LocalDateTime scheduleDate = LocalDateTime.parse(map.get("reserveDate")+" "+ "00:00",formatter);
-        double totalPrice = Double.parseDouble(map.get("price"));
+        LocalDateTime scheduleDate = LocalDateTime.parse(map.get("scheduleDate")+" "+ "00:00",formatter);
+        double totalPrice = Double.parseDouble(map.get("totalPrice"));
         //Barber barberId = barberRepository.getReferenceById("B0001");
         Reserve reserve = new Reserve(reserveId,reserveDate,status,totalPrice,payDate,receiptId,scheduleDate,null,customer);
         return reserveRepository.save(reserve);
@@ -90,6 +92,23 @@ public class ReserveServiceImpl implements ReserveService{
     @Override
     public Reserve getReceipt(String receiptId) {
         return reserveRepository.findByReceiptId(receiptId);
+    }
+
+    @Override
+    public Reserve updateConfirmPayment(String reserveId) {
+        Reserve reserve = reserveRepository.getReferenceById(reserveId);
+        reserve.setStatus("complete");
+      /*  Barber barber = barberRepository.getReferenceById(reserve.getBarber().getBarberId());
+        barber.setBarberStatus("ไม่ว่าง");
+        barberRepository.save(barber);*/
+        return reserveRepository.save(reserve);
+    }
+
+    @Override
+    public Reserve cancelJob(String reserveId) {
+        Reserve reserve = reserveRepository.getReferenceById(reserveId);
+        reserve.setStatus("canceled");
+        return reserveRepository.save(reserve);
     }
 
     public long getReserveCount(){

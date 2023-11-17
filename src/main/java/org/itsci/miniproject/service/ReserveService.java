@@ -24,4 +24,8 @@ public interface ReserveService {
     List<Reserve> getReserveByCustomerId(String customerId);
 
     Reserve getReceipt(String receiptId);
+
+    Reserve updateConfirmPayment(String reserveId);
+
+    Reserve cancelJob(String reserveId);
 }

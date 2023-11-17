@@ -43,7 +43,7 @@ public class ReserveDetailServiceImpl implements ReserveDetailService{
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         String reserveDetailId = generateReserveDetailId();
         org.itsci.miniproject.model.Service serviceModel = serviceRepository.getServiceByServiceName(map.get("serviceName"));
-        LocalDateTime scheduleTime = LocalDateTime.parse(map.get("scheduleDate")+" "+map.get("time"), formatter);
+        LocalDateTime scheduleTime = LocalDateTime.parse(map.get("scheduleDate")+" "+map.get("scheduleTime")+":00", formatter);
         Reserve reserve = reserveRepository.getReferenceById(reserveId);
         ReserveDetail reserveDetail = new ReserveDetail(reserveDetailId,serviceModel.getPrice(),scheduleTime,serviceModel.getTimespend(),reserve,serviceModel);
         return reserveDetailRepository.save(reserveDetail);
