@@ -98,8 +98,7 @@ public class BarberServiceImpl implements BarberService {
             e.printStackTrace();
         }
     }
-
-
+    @Override
     public long getBarberCount() {
         try {
             return barberRepository.count();

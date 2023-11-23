@@ -42,7 +42,6 @@ public class ReserveServiceImpl implements ReserveService{
 
     @Override
     public Reserve saveReserve(Map<String, String> map) {
-
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         LocalDateTime dT = LocalDateTime.now();
         String formattedDateTime = dT.format(formatter);
@@ -54,8 +53,8 @@ public class ReserveServiceImpl implements ReserveService{
         Customer customer = customerRepository.getCustomerByUserId(map.get("userId"));
         LocalDateTime scheduleDate = LocalDateTime.parse(map.get("scheduleDate")+" "+ "00:00",formatter);
         double totalPrice = Double.parseDouble(map.get("totalPrice"));
-        //Barber barberId = barberRepository.getReferenceById("B0001");
-        Reserve reserve = new Reserve(reserveId,reserveDate,status,totalPrice,payDate,receiptId,scheduleDate,null,customer);
+        Barber barber = findBarberForReserve(scheduleDate);
+        Reserve reserve = new Reserve(reserveId,reserveDate,status,totalPrice,payDate,receiptId,scheduleDate,barber,customer);
         return reserveRepository.save(reserve);
     }
 
@@ -98,9 +97,6 @@ public class ReserveServiceImpl implements ReserveService{
     public Reserve updateConfirmPayment(String reserveId) {
         Reserve reserve = reserveRepository.getReferenceById(reserveId);
         reserve.setStatus("complete");
-      /*  Barber barber = barberRepository.getReferenceById(reserve.getBarber().getBarberId());
-        barber.setBarberStatus("ไม่ว่าง");
-        barberRepository.save(barber);*/
         return reserveRepository.save(reserve);
     }
 
@@ -109,6 +105,22 @@ public class ReserveServiceImpl implements ReserveService{
         Reserve reserve = reserveRepository.getReferenceById(reserveId);
         reserve.setStatus("canceled");
         return reserveRepository.save(reserve);
+    }
+
+    public Barber findBarberForReserve(LocalDateTime scheduleDate){
+        Barber barber2 = new Barber();
+       List<Reserve> reserve = reserveRepository.findByScheduleDate(scheduleDate);
+       if(reserve.size() == 0){
+           List<Barber> barberList = barberRepository.findAll();
+           return barberList.get(0);
+       }else{
+           for (Reserve item : reserve) {
+
+               barber2 = barberRepository.getReferenceById(item.getBarber().getBarberId());
+               System.out.println(item.getBarber().getBarberId());
+           }
+           return barber2;
+       }
     }
 
     public long getReserveCount(){

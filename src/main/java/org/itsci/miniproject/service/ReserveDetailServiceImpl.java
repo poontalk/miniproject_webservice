@@ -4,6 +4,7 @@ import org.itsci.miniproject.model.*;
 import org.itsci.miniproject.repository.ReserveDetailRepository;
 import org.itsci.miniproject.repository.ReserveRepository;
 import org.itsci.miniproject.repository.ServiceRepository;
+import org.itsci.miniproject.response.ScheduleTimeCountDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -68,6 +69,13 @@ public class ReserveDetailServiceImpl implements ReserveDetailService{
     @Override
     public List<ReserveDetail> findReserveDetailByStatus() {
         return reserveDetailRepository.findOngoingReserveDetails();
+    }
+
+    @Override
+    public List<ScheduleTimeCountDTO> countScheduleTime() {
+
+        //System.out.println(countList);
+        return reserveDetailRepository.countByScheduleTime();
     }
 
     public long getReserveDetailCount(){

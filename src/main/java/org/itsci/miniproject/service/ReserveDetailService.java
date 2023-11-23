@@ -1,6 +1,7 @@
 package org.itsci.miniproject.service;
 
 import org.itsci.miniproject.model.ReserveDetail;
+import org.itsci.miniproject.response.ScheduleTimeCountDTO;
 
 import java.util.List;
 import java.util.Map;
@@ -21,4 +22,6 @@ public interface ReserveDetailService {
     List<ReserveDetail> findReserveDetailByReserveId(String reserveId);
 
     List<ReserveDetail> findReserveDetailByStatus();
+
+    List<ScheduleTimeCountDTO> countScheduleTime();
 }

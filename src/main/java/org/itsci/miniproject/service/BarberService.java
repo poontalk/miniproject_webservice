@@ -21,5 +21,6 @@ public interface BarberService {
 
     void deleteAuthorityLoginById(String barberId);
 
+    long getBarberCount();
 
 }

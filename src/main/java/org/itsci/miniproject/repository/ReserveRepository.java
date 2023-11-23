@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ReserveRepository extends JpaRepository<Reserve,String> {
@@ -23,4 +24,7 @@ public interface ReserveRepository extends JpaRepository<Reserve,String> {
     List<Reserve> getReservesByCustomerCustomerId(String customerId);
 
     Reserve findByReceiptId(String receiptId);
+
+    @Query("SELECT r FROM Reserve r WHERE r.ScheduleDate = :scheduleDate")
+    List<Reserve> findByScheduleDate(@Param("scheduleDate") LocalDateTime scheduleDate);
 }

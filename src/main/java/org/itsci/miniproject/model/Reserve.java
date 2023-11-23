@@ -35,8 +35,9 @@ public class Reserve {
 	
 	@Column(nullable = false, length = 10)
 	private String receiptId;
-	
+
 	@Column(nullable = false, length =45)
+	@Temporal(TemporalType.TIMESTAMP)
 	private LocalDateTime ScheduleDate;
 	
 	@ManyToOne(cascade = CascadeType.ALL)

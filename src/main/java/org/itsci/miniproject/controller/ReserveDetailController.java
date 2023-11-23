@@ -1,6 +1,7 @@
 package org.itsci.miniproject.controller;
 
 import org.itsci.miniproject.model.*;
+import org.itsci.miniproject.response.ScheduleTimeCountDTO;
 import org.itsci.miniproject.service.ReserveDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -92,6 +93,17 @@ public class ReserveDetailController {
 
             e.printStackTrace();
             return new ResponseEntity<>("Failed get List", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/getcountscheduletime")
+    public  ResponseEntity getCountScheduleTime (){
+        try {
+            List<ScheduleTimeCountDTO> reserveDetails = reserveDetailService.countScheduleTime();
+            return new ResponseEntity<>(reserveDetails,HttpStatus.OK);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>("Failed to get ReserveDetail by reserve Id ", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

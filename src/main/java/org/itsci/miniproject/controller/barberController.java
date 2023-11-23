@@ -2,10 +2,7 @@ package org.itsci.miniproject.controller;
 
 import jakarta.persistence.Tuple;
 import jakarta.persistence.TupleElement;
-import org.itsci.miniproject.model.Barber;
-import org.itsci.miniproject.model.Customer;
-import org.itsci.miniproject.model.Service;
-import org.itsci.miniproject.model.User;
+import org.itsci.miniproject.model.*;
 import org.itsci.miniproject.service.BarberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -88,5 +85,17 @@ public class barberController {
             return new ResponseEntity<>("Failed Delete Barber", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/getcountbarber")
+    public ResponseEntity getCountBarber() {
+        try {
+            Integer barber = Math.toIntExact(barberService.getBarberCount());
+            return new ResponseEntity<>(barber, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("Failed to get User by Id ", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
 }

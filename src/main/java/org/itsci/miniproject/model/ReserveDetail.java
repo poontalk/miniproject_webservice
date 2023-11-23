@@ -38,5 +38,4 @@ public class ReserveDetail {
     @JoinColumn(name = "serviceId")
     private Service service;
 	
-	
 }

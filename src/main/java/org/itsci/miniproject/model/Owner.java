@@ -1,6 +1,7 @@
 package org.itsci.miniproject.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
@@ -14,8 +15,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
-public class Owner extends User{
-	
+public class Owner {
+	@Id
 	@Column(nullable = false, length = 10)
 	private String ownerId;
 	
@@ -31,7 +32,11 @@ public class Owner extends User{
 	@Column(length = 6)
 	private LocalDateTime dayOff;
 	
-	@Column(nullable = false, length = 6)
-	private LocalDateTime weekend;
-	
+	@Column(length = 10)
+	private String weekend;
+
+	@OneToOne(cascade = CascadeType.ALL,optional = false)
+	@JoinColumn(name = "userId")
+	private User user;
+
 }
