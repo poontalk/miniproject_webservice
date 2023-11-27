@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -139,6 +140,17 @@ public class ReserveController {
         }catch (Exception e){
             e.printStackTrace();
             return  new ResponseEntity<>("Failed update Reserve",HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/getreservebyschduletime/{localtime}")
+    public  ResponseEntity getReserveByScheduleTime ( @PathVariable("localtime") LocalDateTime localtime){
+        try {
+            List<Reserve> reserve = reserveService.findReserveByScheduleTime(localtime);
+            return new ResponseEntity<>(reserve,HttpStatus.OK);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>("Failed to get Reserve by Id ", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

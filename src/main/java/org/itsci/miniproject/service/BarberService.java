@@ -3,6 +3,7 @@ package org.itsci.miniproject.service;
 import org.itsci.miniproject.model.Barber;
 import org.itsci.miniproject.model.User;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -22,5 +23,7 @@ public interface BarberService {
     void deleteAuthorityLoginById(String barberId);
 
     long getBarberCount();
+
+    List<Barber> findAvailableBarbers(LocalDateTime localDateTime);
 
 }

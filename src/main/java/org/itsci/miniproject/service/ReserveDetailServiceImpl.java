@@ -1,6 +1,7 @@
 package org.itsci.miniproject.service;
 
 import org.itsci.miniproject.model.*;
+import org.itsci.miniproject.repository.BarberRepository;
 import org.itsci.miniproject.repository.ReserveDetailRepository;
 import org.itsci.miniproject.repository.ReserveRepository;
 import org.itsci.miniproject.repository.ServiceRepository;
@@ -22,6 +23,8 @@ public class ReserveDetailServiceImpl implements ReserveDetailService{
     private ServiceRepository serviceRepository;
     @Autowired
     private ReserveRepository reserveRepository;
+    @Autowired
+    private BarberRepository barberRepository;
 
     @Override
     public List<ReserveDetail> getAllData() {
@@ -46,6 +49,7 @@ public class ReserveDetailServiceImpl implements ReserveDetailService{
         org.itsci.miniproject.model.Service serviceModel = serviceRepository.getServiceByServiceName(map.get("serviceName"));
         LocalDateTime scheduleTime = LocalDateTime.parse(map.get("scheduleDate")+" "+map.get("scheduleTime")+":00", formatter);
         Reserve reserve = reserveRepository.getReferenceById(reserveId);
+        setBarberAfterFindBarber(scheduleTime,reserveId);
         ReserveDetail reserveDetail = new ReserveDetail(reserveDetailId,serviceModel.getPrice(),scheduleTime,serviceModel.getTimespend(),reserve,serviceModel);
         return reserveDetailRepository.save(reserveDetail);
     }
@@ -76,6 +80,13 @@ public class ReserveDetailServiceImpl implements ReserveDetailService{
 
         //System.out.println(countList);
         return reserveDetailRepository.countByScheduleTime();
+    }
+
+    public void setBarberAfterFindBarber(LocalDateTime localDateTime,String reserveId){
+        List<Barber> barberList = barberRepository.findAvailableBarbers(localDateTime);
+        Reserve reserve = reserveRepository.getReferenceById(reserveId);
+        reserve.setBarber(barberList.get(0));
+        reserveRepository.save(reserve);
     }
 
     public long getReserveDetailCount(){

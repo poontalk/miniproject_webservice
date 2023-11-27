@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -97,5 +98,15 @@ public class barberController {
         }
     }
 
+    @GetMapping("/findAvailableBarbers/{localtime}")
+    public ResponseEntity getAvailableBarbers(@PathVariable("localtime") LocalDateTime localtime) {
+        try {
+            List<Barber> barbers = barberService.findAvailableBarbers(localtime);
+            return new ResponseEntity<>(barbers, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("Failed to get User by Id ", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 }

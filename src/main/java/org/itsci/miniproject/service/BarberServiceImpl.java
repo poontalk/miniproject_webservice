@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -98,6 +99,8 @@ public class BarberServiceImpl implements BarberService {
             e.printStackTrace();
         }
     }
+
+
     @Override
     public long getBarberCount() {
         try {
@@ -106,6 +109,12 @@ public class BarberServiceImpl implements BarberService {
             return 0;
         }
     }
+
+    @Override
+    public List<Barber> findAvailableBarbers(LocalDateTime localDateTime) {
+        return barberRepository.findAvailableBarbers(localDateTime);
+    }
+
 
     public String generateBarberId() {
         String result = "" + (getBarberCount() + 1);

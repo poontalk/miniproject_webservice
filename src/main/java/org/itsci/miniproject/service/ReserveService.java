@@ -3,6 +3,7 @@ package org.itsci.miniproject.service;
 import org.itsci.miniproject.model.Reserve;
 import org.itsci.miniproject.model.User;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -28,4 +29,6 @@ public interface ReserveService {
     Reserve updateConfirmPayment(String reserveId);
 
     Reserve cancelJob(String reserveId);
+
+    List<Reserve> findReserveByScheduleTime(LocalDateTime localDateTime);
 }

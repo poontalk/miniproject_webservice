@@ -27,4 +27,9 @@ public interface ReserveRepository extends JpaRepository<Reserve,String> {
 
     @Query("SELECT r FROM Reserve r WHERE r.ScheduleDate = :scheduleDate")
     List<Reserve> findByScheduleDate(@Param("scheduleDate") LocalDateTime scheduleDate);
+
+    @Query("SELECT r FROM Reserve r JOIN ReserveDetail rd ON r.reserveId = rd.reserve.reserveId WHERE rd.scheduleTime >= :scheduleTime")
+    List<Reserve> findReservesByScheduleTime(@Param("scheduleTime") LocalDateTime scheduleTime);
+
+
 }

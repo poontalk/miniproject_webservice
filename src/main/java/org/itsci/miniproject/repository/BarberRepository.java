@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface BarberRepository extends JpaRepository<Barber,String> {
@@ -21,4 +22,10 @@ public interface BarberRepository extends JpaRepository<Barber,String> {
 
     @Query("update Barber b set b.barberStatus = :barberStatus where b.barberId = :barberId")
     void doEditStatus(@Param("barberStatus") String barberStatus, @Param("barberId") String barberId);
+
+    @Query("SELECT b FROM Barber b WHERE b.barberId NOT in (" +
+            "SELECT b.barberId FROM Reserve r join Barber b on r.barber.barberId = b.barberId" +
+            " JOIN ReserveDetail rd ON r.reserveId = rd.reserve.reserveId WHERE rd.scheduleTime = :scheduleTime)")
+    List<Barber> findAvailableBarbers(@Param("scheduleTime") LocalDateTime scheduleTime);
+
 }
