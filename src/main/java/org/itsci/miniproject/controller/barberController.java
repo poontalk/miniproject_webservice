@@ -109,4 +109,15 @@ public class barberController {
         }
     }
 
+    @GetMapping("/getbyUserid/{userId}")
+    public ResponseEntity getBarberByUserId(@PathVariable("userId") String userId) {
+        try {
+            Barber barber = barberService.getBarberByUserId(userId);
+            return new ResponseEntity<>(barber, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("Failed to get User by Id ", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

@@ -18,11 +18,11 @@ public class ReserveDetailController {
     private ReserveDetailService reserveDetailService;
 
     @RequestMapping("/list")
-    public ResponseEntity listReserveDetail(){
+    public ResponseEntity listReserveDetail() {
         try {
             List<ReserveDetail> reserveDetails = reserveDetailService.getAllData();
             return new ResponseEntity<>(reserveDetails, HttpStatus.OK);
-        }catch (Exception e){
+        } catch (Exception e) {
 
             e.printStackTrace();
             return new ResponseEntity<>("Failed get List", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -30,66 +30,66 @@ public class ReserveDetailController {
     }
 
     @GetMapping("/getbyid/{reserveDetailId}")
-    public  ResponseEntity getReserveDetailById (@PathVariable("reserveDetailId")String reserveDetailId){
+    public ResponseEntity getReserveDetailById(@PathVariable("reserveDetailId") String reserveDetailId) {
         try {
             ReserveDetail reserveDetails = reserveDetailService.getReserveDetailById(reserveDetailId);
-            return new ResponseEntity<>(reserveDetails,HttpStatus.OK);
-        }catch (Exception e){
+            return new ResponseEntity<>(reserveDetails, HttpStatus.OK);
+        } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>("Failed to get ReserveDetail by Id ", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @RequestMapping("/add")
-    public ResponseEntity doReserveService (@RequestBody Map<String,String> map){
+    public ResponseEntity doReserveService(@RequestBody Map<String, String> map) {
         try {
             ReserveDetail reserveDetails = reserveDetailService.saveReserveDetail(map);
-            return new ResponseEntity<>(reserveDetails,HttpStatus.OK);
-        }catch (Exception e){
+            return new ResponseEntity<>(reserveDetails, HttpStatus.OK);
+        } catch (Exception e) {
             e.printStackTrace();
-            return  new ResponseEntity<>("Failed Add ReserveDetail",HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Failed Add ReserveDetail", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PutMapping("/update")
-    public ResponseEntity updateConfirmPayment(@RequestBody ReserveDetail reserveDetail){
+    public ResponseEntity updateConfirmPayment(@RequestBody ReserveDetail reserveDetail) {
         try {
             ReserveDetail updatedReserveDetail = reserveDetailService.updateReserveDetail(reserveDetail);
-            return new ResponseEntity<>(updatedReserveDetail,HttpStatus.OK);
-        }catch (Exception e){
+            return new ResponseEntity<>(updatedReserveDetail, HttpStatus.OK);
+        } catch (Exception e) {
             e.printStackTrace();
-            return  new ResponseEntity<>("Failed update ReserveDetail",HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Failed update ReserveDetail", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @DeleteMapping("/delete/{reserveDetailId}")
-    public ResponseEntity deleteReserve (@PathVariable("reserveDetailId")String reserveDetailId){
+    public ResponseEntity deleteReserve(@PathVariable("reserveDetailId") String reserveDetailId) {
         try {
             reserveDetailService.deleteReserveDetail(reserveDetailId);
-            return  new ResponseEntity<>("This" + reserveDetailId + "deleted" ,HttpStatus.OK);
-        }catch (Exception e){
+            return new ResponseEntity<>("This" + reserveDetailId + "deleted", HttpStatus.OK);
+        } catch (Exception e) {
             e.printStackTrace();
-            return  new ResponseEntity<>("Failed Delete ReserveDetail",HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Failed Delete ReserveDetail", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @GetMapping("/getbyreserveId/{reserveId}")
-    public  ResponseEntity getReserveDetailByReserveId (@PathVariable("reserveId")String reserveId){
+    public ResponseEntity getReserveDetailByReserveId(@PathVariable("reserveId") String reserveId) {
         try {
             List<ReserveDetail> reserveDetails = reserveDetailService.findReserveDetailByReserveId(reserveId);
-            return new ResponseEntity<>(reserveDetails,HttpStatus.OK);
-        }catch (Exception e){
+            return new ResponseEntity<>(reserveDetails, HttpStatus.OK);
+        } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>("Failed to get ReserveDetail by reserve Id ", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @GetMapping("/listreservedetailbystatus")
-    public ResponseEntity listReserveDetailByStatus(){
+    public ResponseEntity listReserveDetailByStatus() {
         try {
             List<ReserveDetail> reserveDetails = reserveDetailService.findReserveDetailByStatus();
             return new ResponseEntity<>(reserveDetails, HttpStatus.OK);
-        }catch (Exception e){
+        } catch (Exception e) {
 
             e.printStackTrace();
             return new ResponseEntity<>("Failed get List", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -97,11 +97,11 @@ public class ReserveDetailController {
     }
 
     @GetMapping("/getcountscheduletime")
-    public  ResponseEntity getCountScheduleTime (){
+    public ResponseEntity getCountScheduleTime() {
         try {
             List<ScheduleTimeCountDTO> reserveDetails = reserveDetailService.countScheduleTime();
-            return new ResponseEntity<>(reserveDetails,HttpStatus.OK);
-        }catch (Exception e){
+            return new ResponseEntity<>(reserveDetails, HttpStatus.OK);
+        } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>("Failed to get ReserveDetail by reserve Id ", HttpStatus.INTERNAL_SERVER_ERROR);
         }

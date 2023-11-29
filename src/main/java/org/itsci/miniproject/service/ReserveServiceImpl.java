@@ -20,13 +20,11 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class ReserveServiceImpl implements ReserveService{
+public class ReserveServiceImpl implements ReserveService {
     @Autowired
     private ReserveRepository reserveRepository;
     @Autowired
     private CustomerRepository customerRepository;
-    @Autowired
-    private BarberRepository barberRepository;
     @Autowired
     private ReserveDetailRepository reserveDetailRepository;
 
@@ -48,12 +46,12 @@ public class ReserveServiceImpl implements ReserveService{
         String reserveId = generateReserveId();
         String status = "reserved";
         LocalDateTime reserveDate = LocalDateTime.parse(formattedDateTime, formatter);
-        LocalDateTime payDate = LocalDateTime.parse(map.get("scheduleDate")+" "+"00:00", formatter);
+        LocalDateTime payDate = LocalDateTime.parse(map.get("scheduleDate") + " " + "00:00", formatter);
         String receiptId = generateReceiptId();
         Customer customer = customerRepository.getCustomerByUserId(map.get("userId"));
-        LocalDateTime scheduleDate = LocalDateTime.parse(map.get("scheduleDate")+" "+ "00:00",formatter);
+        LocalDateTime scheduleDate = LocalDateTime.parse(map.get("scheduleDate") + " " + "00:00", formatter);
         double totalPrice = Double.parseDouble(map.get("totalPrice"));
-        Reserve reserve = new Reserve(reserveId,reserveDate,status,totalPrice,payDate,receiptId,scheduleDate,null,customer);
+        Reserve reserve = new Reserve(reserveId, reserveDate, status, totalPrice, payDate, receiptId, scheduleDate, null, customer);
         return reserveRepository.save(reserve);
     }
 
@@ -69,17 +67,17 @@ public class ReserveServiceImpl implements ReserveService{
         for (ReserveDetail detail : reserveDetail) {
             reserveDetailRepository.deleteByTable(detail.getReservedetailId());
         }
-         reserveRepository.deleteByReserveTable(reserve.getReserveId());
+        reserveRepository.deleteByReserveTable(reserve.getReserveId());
     }
 
     @Override
     public List<Reserve> findReserveByStatusAndCustomerId(String customerId) {
-            return reserveRepository.findOngoingOrReservedByCustomerId(customerId);
+        return reserveRepository.findOngoingOrReservedByCustomerId(customerId);
     }
 
     @Override
-    public List<Reserve> findReserveForBarber() {
-        return reserveRepository.findOngoingOrReserve();
+    public List<Reserve> findReserveForBarber(String barberId) {
+        return reserveRepository.findReserveByBarberBarberId(barberId);
     }
 
     @Override
@@ -106,35 +104,29 @@ public class ReserveServiceImpl implements ReserveService{
         return reserveRepository.save(reserve);
     }
 
-
-    @Override
-    public List<Reserve> findReserveByScheduleTime(LocalDateTime scheduleTime) {
-        return reserveRepository.findReservesByScheduleTime(scheduleTime);
-    }
-
-    public long getReserveCount(){
-        try{
+    public long getReserveCount() {
+        try {
             return reserveRepository.count();
-        }catch (Exception e){
+        } catch (Exception e) {
             return 0;
         }
     }
 
-    public String generateReserveId(){
+    public String generateReserveId() {
         String result = "" + (getReserveCount() + 1);
-        while (result.length() < 4){
+        while (result.length() < 4) {
             result = "0" + result;
         }
-        result = "R"+ result;
+        result = "R" + result;
         return result;
     }
 
-    public String generateReceiptId(){
+    public String generateReceiptId() {
         String result = "" + (getReserveCount() + 1);
-        while (result.length() < 4){
+        while (result.length() < 4) {
             result = "0" + result;
         }
-        result = "RC"+ result;
+        result = "RC" + result;
         return result;
     }
 }

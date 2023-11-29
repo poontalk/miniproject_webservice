@@ -20,7 +20,7 @@ public interface ReserveService {
 
     List<Reserve> findReserveByStatusAndCustomerId(String customerId);
 
-    List<Reserve> findReserveForBarber();
+    List<Reserve> findReserveForBarber(String barberId);
 
     List<Reserve> getReserveByCustomerId(String customerId);
 
@@ -29,6 +29,4 @@ public interface ReserveService {
     Reserve updateConfirmPayment(String reserveId);
 
     Reserve cancelJob(String reserveId);
-
-    List<Reserve> findReserveByScheduleTime(LocalDateTime localDateTime);
 }

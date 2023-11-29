@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ReserveRepository extends JpaRepository<Reserve,String> {
@@ -22,14 +21,7 @@ public interface ReserveRepository extends JpaRepository<Reserve,String> {
     List<Reserve> findOngoingOrReserve();
     @Query("SELECT r FROM Reserve r WHERE r.status = 'complete' AND r.customer.userId = :customerId")
     List<Reserve> getReservesByCustomerCustomerId(String customerId);
-
     Reserve findByReceiptId(String receiptId);
 
-    @Query("SELECT r FROM Reserve r WHERE r.ScheduleDate = :scheduleDate")
-    List<Reserve> findByScheduleDate(@Param("scheduleDate") LocalDateTime scheduleDate);
-
-    @Query("SELECT r FROM Reserve r JOIN ReserveDetail rd ON r.reserveId = rd.reserve.reserveId WHERE rd.scheduleTime >= :scheduleTime")
-    List<Reserve> findReservesByScheduleTime(@Param("scheduleTime") LocalDateTime scheduleTime);
-
-
-}
+    List<Reserve> findReserveByBarberBarberId(String barberId);
+ }

@@ -28,4 +28,6 @@ public interface BarberRepository extends JpaRepository<Barber,String> {
             " JOIN ReserveDetail rd ON r.reserveId = rd.reserve.reserveId WHERE rd.scheduleTime = :scheduleTime)")
     List<Barber> findAvailableBarbers(@Param("scheduleTime") LocalDateTime scheduleTime);
 
+    Barber getBarberByUser_UserId(String userId);
+
 }

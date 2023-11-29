@@ -26,4 +26,6 @@ public interface BarberService {
 
     List<Barber> findAvailableBarbers(LocalDateTime localDateTime);
 
+    Barber getBarberByUserId(String userId);
+
 }

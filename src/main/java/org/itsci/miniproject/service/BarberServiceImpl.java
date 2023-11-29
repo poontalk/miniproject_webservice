@@ -115,6 +115,11 @@ public class BarberServiceImpl implements BarberService {
         return barberRepository.findAvailableBarbers(localDateTime);
     }
 
+    @Override
+    public Barber getBarberByUserId(String userId) {
+        return barberRepository.getBarberByUser_UserId(userId);
+    }
+
 
     public String generateBarberId() {
         String result = "" + (getBarberCount() + 1);
