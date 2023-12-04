@@ -30,7 +30,7 @@ public class OwnerController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity updateLogin(@RequestBody Map<String,String> map){
+    public ResponseEntity updateOwner(@RequestBody Map<String,String> map){
         try {
             Owner updatedOwner = ownerService.editShopProfile(map);
             return new ResponseEntity<>(updatedOwner,HttpStatus.OK);
