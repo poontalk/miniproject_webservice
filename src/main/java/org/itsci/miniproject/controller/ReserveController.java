@@ -2,6 +2,7 @@ package org.itsci.miniproject.controller;
 
 import org.itsci.miniproject.model.Login;
 import org.itsci.miniproject.model.Reserve;
+import org.itsci.miniproject.response.ReportIncome;
 import org.itsci.miniproject.service.ReserveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -142,5 +143,21 @@ public class ReserveController {
             return new ResponseEntity<>("Failed update Reserve", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @GetMapping("/getweeklytotal")
+    public ResponseEntity<List<ReportIncome>> getWeeklyTotal() {
+        List<ReportIncome> weeklyTotalList = reserveService.getWeeklyTotal();
+        return new ResponseEntity<>(weeklyTotalList, HttpStatus.OK);
+    }
 
+    @GetMapping("/totalMonthlySales")
+    public ResponseEntity<List <Map<String, Object>>> getTotalMonthlySales() {
+        List<Map<String, Object>> monthlySales = reserveService.getTotalMonthlySales();
+        return new ResponseEntity<>(monthlySales, HttpStatus.OK);
+    }
+
+    @GetMapping("/getdailytotal")
+    public ResponseEntity<List<Object[]>> getDailyTotal() {
+        List<Object[]> dailyTotalList = reserveService.getDailyTotal();
+        return new ResponseEntity<>(dailyTotalList, HttpStatus.OK);
+    }
 }

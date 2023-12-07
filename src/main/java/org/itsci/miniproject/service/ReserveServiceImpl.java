@@ -8,6 +8,7 @@ import org.itsci.miniproject.repository.BarberRepository;
 import org.itsci.miniproject.repository.CustomerRepository;
 import org.itsci.miniproject.repository.ReserveDetailRepository;
 import org.itsci.miniproject.repository.ReserveRepository;
+import org.itsci.miniproject.response.ReportIncome;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -102,6 +105,38 @@ public class ReserveServiceImpl implements ReserveService {
         Reserve reserve = reserveRepository.getReferenceById(reserveId);
         reserve.setStatus("canceled");
         return reserveRepository.save(reserve);
+    }
+    @Override
+    public List<Map<String, Object>> getTotalMonthlySales() {
+        return reserveRepository.findTotalMonthlySales();
+    }
+    @Override
+    public List<Object[]> getDailyTotal() {
+        return reserveRepository.findDailyTotal();
+    }
+
+    @Override
+    public List<ReportIncome> getWeeklyTotal() {
+        List<Reserve> reserves = reserveRepository.findByStatusOrderByPayDateDesc("complete");
+
+        Map<String, Double> weeklyTotalMap = new HashMap<>();
+
+        for (Reserve reserve : reserves) {
+            String week = reserve.getPayDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            week += " - " + reserve.getPayDate().minusDays(7).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+            double totalWeek = weeklyTotalMap.getOrDefault(week, 0.0);
+            totalWeek += reserve.getTotalPrice();
+            weeklyTotalMap.put(week, totalWeek);
+        }
+
+        List<ReportIncome> result = new ArrayList<>();
+        for (Map.Entry<String, Double> entry : weeklyTotalMap.entrySet()) {
+            ReportIncome dto = new ReportIncome(entry.getKey(), entry.getValue());
+            result.add(dto);
+        }
+
+        return result;
     }
 
     public long getReserveCount() {

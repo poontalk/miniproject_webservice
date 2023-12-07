@@ -3,12 +3,16 @@ package org.itsci.miniproject.service;
 import org.itsci.miniproject.model.Owner;
 import org.itsci.miniproject.model.Reserve;
 import org.itsci.miniproject.repository.OwnerRepository;
+import org.itsci.miniproject.repository.ReserveRepository;
+import org.itsci.miniproject.response.ReportIncome;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,7 +20,6 @@ import java.util.Map;
 public class OwnerServiceImpl implements OwnerService {
     @Autowired
     private OwnerRepository ownerRepository;
-
 
     @Override
     public List<Owner> getListOwner() {
@@ -26,13 +29,6 @@ public class OwnerServiceImpl implements OwnerService {
     @Override
     public Owner showShopProfile(String ownerId) {
         return ownerRepository.getReferenceById(ownerId);
-    }
-
-    @Override
-    public Owner saveReserve(Map<String, String> map) {
-        LocalDate localDate = LocalDate.now();
-
-        return null;
     }
 
     @Override
@@ -57,4 +53,5 @@ public class OwnerServiceImpl implements OwnerService {
         owner.setWeekend(weekend);
         return ownerRepository.save(owner);
     }
+
 }

@@ -2,7 +2,9 @@ package org.itsci.miniproject.controller;
 
 import org.itsci.miniproject.model.Login;
 import org.itsci.miniproject.model.Owner;
+import org.itsci.miniproject.response.ReportIncome;
 import org.itsci.miniproject.service.OwnerService;
+import org.itsci.miniproject.service.ReserveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +18,6 @@ import java.util.Map;
 public class OwnerController {
     @Autowired
     private OwnerService ownerService;
-
     @RequestMapping("/list")
     public ResponseEntity getListOwners(){
         try {
@@ -60,6 +61,5 @@ public class OwnerController {
             return  new ResponseEntity<>("Failed update User",HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 
 }
