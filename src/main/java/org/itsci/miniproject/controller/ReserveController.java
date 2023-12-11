@@ -156,8 +156,8 @@ public class ReserveController {
     }
 
     @GetMapping("/getdailytotal")
-    public ResponseEntity<List<Object[]>> getDailyTotal() {
-        List<Object[]> dailyTotalList = reserveService.getDailyTotal();
+    public ResponseEntity<List<Map<String, Object>>> getDailyTotal() {
+        List<Map<String, Object>> dailyTotalList = reserveService.getDailyTotal();
         return new ResponseEntity<>(dailyTotalList, HttpStatus.OK);
     }
 }

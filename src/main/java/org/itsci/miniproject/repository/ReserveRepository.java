@@ -24,6 +24,7 @@ public interface ReserveRepository extends JpaRepository<Reserve,String> {
     @Query("SELECT r FROM Reserve r WHERE r.status = 'complete' AND r.customer.userId = :customerId")
     List<Reserve> getReservesByCustomerCustomerId(String customerId);
     Reserve findByReceiptId(String receiptId);
+    @Query("select r from Reserve r where r.status = 'reserved' AND r.barber.barberId = :barberId")
     List<Reserve> findReserveByBarberBarberId(String barberId);
 
     List<Reserve> findByStatusOrderByPayDateDesc(String status);
@@ -37,5 +38,5 @@ public interface ReserveRepository extends JpaRepository<Reserve,String> {
             "FROM reserve " +
             "WHERE status = 'complete' " +
             "GROUP BY pay_date DESC", nativeQuery = true)
-    List<Object[]> findDailyTotal();
+    List<Map<String, Object>> findDailyTotal();
  }

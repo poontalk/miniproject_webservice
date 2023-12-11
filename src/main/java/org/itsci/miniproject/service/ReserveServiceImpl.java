@@ -111,7 +111,7 @@ public class ReserveServiceImpl implements ReserveService {
         return reserveRepository.findTotalMonthlySales();
     }
     @Override
-    public List<Object[]> getDailyTotal() {
+    public List<Map<String, Object>> getDailyTotal() {
         return reserveRepository.findDailyTotal();
     }
 
