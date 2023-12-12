@@ -13,4 +13,5 @@ import java.util.List;
 public class ScheduleTimeCountDTO {
     private LocalDateTime scheduleTime;
     private Long count;
+    private int timeSpend;
 }

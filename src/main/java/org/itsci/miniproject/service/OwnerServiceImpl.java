@@ -36,7 +36,7 @@ public class OwnerServiceImpl implements OwnerService {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         LocalDateTime openTime = LocalDateTime.parse("2023-01-01"+" "+map.get("openTime"), formatter);
         LocalDateTime closeTime = LocalDateTime.parse("2023-01-01"+" "+map.get("closeTime"), formatter);
-        LocalDateTime dayOff = LocalDateTime.parse(map.get("dayOff")+" "+"00:00", formatter);
+        LocalDateTime dayOff = map.get("dayOff").equals("") ? null : LocalDateTime.parse(map.get("dayOff")+" "+"00:00", formatter);
         List<Owner> ownerList = ownerRepository.findAll();
         Owner owner = ownerRepository.getReferenceById(ownerList.get(0).getOwnerId());
         owner.setShopName(map.get("shopName"));
