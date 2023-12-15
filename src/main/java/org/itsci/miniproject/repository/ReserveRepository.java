@@ -39,4 +39,6 @@ public interface ReserveRepository extends JpaRepository<Reserve,String> {
             "WHERE status = 'complete' " +
             "GROUP BY pay_date DESC", nativeQuery = true)
     List<Map<String, Object>> findDailyTotal();
+    @Query("select r.reserveId from Reserve r")
+    List<String> findMissingNumber();
  }

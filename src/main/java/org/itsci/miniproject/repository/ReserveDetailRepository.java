@@ -28,4 +28,7 @@ public interface ReserveDetailRepository extends JpaRepository<ReserveDetail, St
     @Query("select r From Reserve r join ReserveDetail rd on r.reserveId = rd.reserve.reserveId where rd.scheduleTime LIKE :scheduleTime")
     List<ReserveDetail> findByScheduleTime(@Param("scheduleTime")String scheduleTime);
 
+    @Query("select new org.itsci.miniproject.response.ScheduleTimeCountDTO(rd.scheduleTime,rd.service.timespend) from ReserveDetail rd join Reserve r on rd.reserve.reserveId = r.reserveId where r.customer.userId =:userId and r.status = 'reserved'")
+    List<ScheduleTimeCountDTO> findScheduleTimeByUserId(@Param("userId")String userId);
+
 }

@@ -24,4 +24,6 @@ public interface ReserveDetailService {
     List<ReserveDetail> findReserveDetailByStatus();
 
     List<ScheduleTimeCountDTO> countScheduleTime();
+
+    List<ScheduleTimeCountDTO> findScheduleTimeByUserId(String userId);
 }

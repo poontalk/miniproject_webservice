@@ -64,14 +64,14 @@ public class ReserveController {
         }
     }
 
-    @DeleteMapping("/delete/{reserveId}")
-    public ResponseEntity deleteReserve(@PathVariable("reserveId") String reserveId) {
+    @PatchMapping("/cancelreserve/{reserveId}")
+    public ResponseEntity cancelReserve(@PathVariable("reserveId") String reserveId) {
         try {
-            reserveService.deleteReserve(reserveId);
-            return new ResponseEntity<>("This" + reserveId + "deleted", HttpStatus.OK);
+            reserveService.cancelJob(reserveId);
+            return new ResponseEntity<>("This" + reserveId + "canceled", HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity<>("Failed Delete Reserve", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Failed canceled Reserve", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -140,7 +140,7 @@ public class ReserveController {
             return new ResponseEntity<>(updatedReserve, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity<>("Failed update Reserve", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Failed Cancel Reserve", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     @GetMapping("/getweeklytotal")

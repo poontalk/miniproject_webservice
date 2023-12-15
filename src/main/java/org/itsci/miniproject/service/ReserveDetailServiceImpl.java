@@ -82,6 +82,11 @@ public class ReserveDetailServiceImpl implements ReserveDetailService {
         return reserveDetailRepository.countByScheduleTime();
     }
 
+    @Override
+    public List<ScheduleTimeCountDTO> findScheduleTimeByUserId(String userId) {
+        return reserveDetailRepository.findScheduleTimeByUserId(userId);
+    }
+
     public void setBarberAfterFindBarber(LocalDateTime localDateTime, String reserveId) {
         List<Barber> barberList = barberRepository.findAvailableBarbers(localDateTime);
         Reserve reserve = reserveRepository.getReferenceById(reserveId);

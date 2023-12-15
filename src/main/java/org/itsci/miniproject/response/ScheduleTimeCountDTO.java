@@ -14,4 +14,9 @@ public class ScheduleTimeCountDTO {
     private LocalDateTime scheduleTime;
     private Long count;
     private int timeSpend;
+
+    public ScheduleTimeCountDTO(LocalDateTime scheduleTime, int timeSpend) {
+        this.scheduleTime = scheduleTime;
+        this.timeSpend = timeSpend;
+    }
 }

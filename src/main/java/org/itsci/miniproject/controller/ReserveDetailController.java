@@ -103,7 +103,18 @@ public class ReserveDetailController {
             return new ResponseEntity<>(reserveDetails, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity<>("Failed to get ReserveDetail by reserve Id ", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Failed to get Count ScheduleTime by reserve Id ", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/scheduletimebyuserId/{userId}")
+    public ResponseEntity getScheduleTimeByUserId(@PathVariable("userId") String userId) {
+        try {
+            List<ScheduleTimeCountDTO> reserveDetails = reserveDetailService.findScheduleTimeByUserId(userId);
+            return new ResponseEntity<>(reserveDetails, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("Failed to get ReserveDetail by user Id ", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
