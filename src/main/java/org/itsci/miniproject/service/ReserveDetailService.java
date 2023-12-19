@@ -9,8 +9,6 @@ import java.util.Map;
 public interface ReserveDetailService {
     List<ReserveDetail> getAllData();
 
-    List<ReserveDetail> getListReserve();
-
     ReserveDetail getReserveDetailById(String reserveDetailId);
 
     ReserveDetail saveReserveDetail(Map<String,String> map);

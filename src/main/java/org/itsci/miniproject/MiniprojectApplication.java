@@ -1,17 +1,29 @@
 package org.itsci.miniproject;
 
 import org.itsci.miniproject.model.Authority;
+import org.itsci.miniproject.model.Reserve;
+import org.itsci.miniproject.model.ReserveDetail;
 import org.itsci.miniproject.repository.AuthorityRepository;
+import org.itsci.miniproject.repository.ReserveDetailRepository;
+import org.itsci.miniproject.repository.ReserveRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @SpringBootApplication
 public class MiniprojectApplication implements CommandLineRunner {
 
     @Autowired
     private AuthorityRepository authorityRepository;
+    @Autowired
+    private ReserveDetailRepository reserveDetailRepository;
+    @Autowired
+    private ReserveRepository reserveRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(MiniprojectApplication.class, args);
@@ -34,5 +46,6 @@ public class MiniprojectApplication implements CommandLineRunner {
         id = 5;
         Authority e = new Authority(id, "user");
         authorityRepository.save(e);
+
     }
 }

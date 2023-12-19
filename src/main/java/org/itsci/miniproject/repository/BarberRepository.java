@@ -25,7 +25,7 @@ public interface BarberRepository extends JpaRepository<Barber,String> {
 
     @Query("SELECT b FROM Barber b WHERE b.barberId NOT in (" +
             "SELECT b.barberId FROM Reserve r join Barber b on r.barber.barberId = b.barberId" +
-            " JOIN ReserveDetail rd ON r.reserveId = rd.reserve.reserveId WHERE rd.scheduleTime = :scheduleTime)")
+            " JOIN ReserveDetail rd ON r.reserveId = rd.reserve.reserveId WHERE rd.scheduleTime = :scheduleTime and r.status ='reserved')")
     List<Barber> findAvailableBarbers(@Param("scheduleTime") LocalDateTime scheduleTime);
 
     Barber getBarberByUser_UserId(String userId);

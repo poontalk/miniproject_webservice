@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -80,6 +81,22 @@ public class ReserveServiceImpl implements ReserveService {
 
     @Override
     public List<Reserve> findReserveForBarber(String barberId) {
+        LocalDateTime currentTime = LocalDateTime.now();
+        List<ReserveDetail> reserveDetailList = reserveDetailRepository.findOngoingReserveDetails();
+        int i = 1;
+        if(reserveDetailList != null){
+            for (ReserveDetail list: reserveDetailList) {
+                Duration duration = Duration.between(list.getScheduleTime(),currentTime);
+                long hoursDifference = duration.toHours();
+                long minutesDifference = duration.toMinutes() % 60;
+                System.out.println(i +". Compare value: " + hoursDifference + " " + minutesDifference);
+                if(hoursDifference > list.getSumTimeSpend() || (hoursDifference == list.getSumTimeSpend() && minutesDifference > 15)){
+                    list.getReserve().setStatus("canceled");
+                    reserveRepository.save(list.getReserve());
+                }
+                i++;
+            }
+        }
         return reserveRepository.findReserveByBarberBarberId(barberId);
     }
 

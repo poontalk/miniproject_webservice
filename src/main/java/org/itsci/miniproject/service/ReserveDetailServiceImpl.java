@@ -32,11 +32,6 @@ public class ReserveDetailServiceImpl implements ReserveDetailService {
     }
 
     @Override
-    public List<ReserveDetail> getListReserve() {
-        return null;
-    }
-
-    @Override
     public ReserveDetail getReserveDetailById(String reserveDetailId) {
         return reserveDetailRepository.getReferenceById(reserveDetailId);
     }
