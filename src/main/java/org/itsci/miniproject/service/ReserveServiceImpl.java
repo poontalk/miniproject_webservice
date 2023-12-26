@@ -18,10 +18,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class ReserveServiceImpl implements ReserveService {
@@ -134,7 +131,7 @@ public class ReserveServiceImpl implements ReserveService {
 
     @Override
     public List<ReportIncome> getWeeklyTotal() {
-        List<Reserve> reserves = reserveRepository.findByStatusOrderByPayDateDesc("complete");
+        List<Reserve> reserves = reserveRepository.findByStatusOrderByPayDateAsc("complete");
 
         Map<String, Double> weeklyTotalMap = new HashMap<>();
 
@@ -146,7 +143,6 @@ public class ReserveServiceImpl implements ReserveService {
             totalWeek += reserve.getTotalPrice();
             weeklyTotalMap.put(week, totalWeek);
         }
-
         List<ReportIncome> result = new ArrayList<>();
         for (Map.Entry<String, Double> entry : weeklyTotalMap.entrySet()) {
             ReportIncome dto = new ReportIncome(entry.getKey(), entry.getValue());
@@ -155,7 +151,6 @@ public class ReserveServiceImpl implements ReserveService {
 
         return result;
     }
-
     public long getReserveCount() {
         try {
             return reserveRepository.count();

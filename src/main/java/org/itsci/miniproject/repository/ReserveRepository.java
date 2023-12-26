@@ -19,26 +19,26 @@ public interface ReserveRepository extends JpaRepository<Reserve,String> {
     @Modifying
     @Query("DELETE FROM Reserve e WHERE e.reserveId = :id")
     void deleteByReserveTable(String id);
-    @Query("SELECT r FROM Reserve r WHERE r.status = 'reserved' ")
-    List<Reserve> findOngoingOrReserve();
+   /* @Query("SELECT r FROM Reserve r WHERE r.status = 'reserved' ")
+    List<Reserve> findOngoingOrReserve();*/
     @Query("SELECT r FROM Reserve r WHERE r.status = 'complete' AND r.customer.userId = :customerId")
     List<Reserve> getReservesByCustomerCustomerId(String customerId);
     Reserve findByReceiptId(String receiptId);
     @Query("select r from Reserve r where r.status = 'reserved' AND r.barber.barberId = :barberId")
     List<Reserve> findReserveByBarberBarberId(String barberId);
 
-    List<Reserve> findByStatusOrderByPayDateDesc(String status);
-
+    List<Reserve> findByStatusOrderByPayDateAsc(String status);
     @Query(value = "SELECT DATE_FORMAT(pay_date, '%Y-%m') AS month, SUM(total_price) AS totalMonthly FROM Reserve " +
             "WHERE pay_date BETWEEN DATE_SUB(CURDATE(), INTERVAL 6 MONTH) AND CURDATE() AND status = 'complete' " +
-            "GROUP BY month", nativeQuery = true)
+            "GROUP BY month ORDER BY pay_date DESC", nativeQuery = true)
     List<Map<String, Object>> findTotalMonthlySales();
 
     @Query(value = "SELECT DATE_FORMAT(pay_date, '%Y-%m-%d') AS daily, SUM(total_price) AS total " +
             "FROM reserve " +
             "WHERE status = 'complete' " +
-            "GROUP BY pay_date DESC", nativeQuery = true)
+            "GROUP BY pay_date " +
+            "ORDER BY pay_date DESC ", nativeQuery = true)
     List<Map<String, Object>> findDailyTotal();
-    @Query("select r.reserveId from Reserve r")
-    List<String> findMissingNumber();
+    /*@Query("select r.reserveId from Reserve r")
+    List<String> findMissingNumber();*/
  }

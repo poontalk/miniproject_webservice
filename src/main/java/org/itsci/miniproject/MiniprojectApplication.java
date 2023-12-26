@@ -46,6 +46,5 @@ public class MiniprojectApplication implements CommandLineRunner {
         id = 5;
         Authority e = new Authority(id, "user");
         authorityRepository.save(e);
-
     }
 }
