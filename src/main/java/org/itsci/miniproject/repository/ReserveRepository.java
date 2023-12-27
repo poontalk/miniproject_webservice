@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +28,8 @@ public interface ReserveRepository extends JpaRepository<Reserve,String> {
     @Query("select r from Reserve r where r.status = 'reserved' AND r.barber.barberId = :barberId")
     List<Reserve> findReserveByBarberBarberId(String barberId);
 
-    List<Reserve> findByStatusOrderByPayDateAsc(String status);
+    List<Reserve> findByStatusOrderByPayDateDesc(String status);
+
     @Query(value = "SELECT DATE_FORMAT(pay_date, '%Y-%m') AS month, SUM(total_price) AS totalMonthly FROM Reserve " +
             "WHERE pay_date BETWEEN DATE_SUB(CURDATE(), INTERVAL 6 MONTH) AND CURDATE() AND status = 'complete' " +
             "GROUP BY month ORDER BY pay_date DESC", nativeQuery = true)

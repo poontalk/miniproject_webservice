@@ -36,4 +36,5 @@ public interface ReserveService {
     List<Map<String, Object>> getTotalMonthlySales();
 
     List<Map<String, Object>> getDailyTotal();
+
 }

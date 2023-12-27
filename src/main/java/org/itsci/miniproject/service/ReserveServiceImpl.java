@@ -18,6 +18,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 @Service
@@ -129,25 +130,47 @@ public class ReserveServiceImpl implements ReserveService {
         return reserveRepository.findDailyTotal();
     }
 
+
     @Override
     public List<ReportIncome> getWeeklyTotal() {
-        List<Reserve> reserves = reserveRepository.findByStatusOrderByPayDateAsc("complete");
-
+        List<Reserve> reserves = reserveRepository.findByStatusOrderByPayDateDesc("complete");
+        List<LocalDateTime> betweenDefaultAndWeek  = new ArrayList<>();
         Map<String, Double> weeklyTotalMap = new HashMap<>();
 
         for (Reserve reserve : reserves) {
-            String week = reserve.getPayDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-            week += " - " + reserve.getPayDate().minusDays(7).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            LocalDateTime defaultDate = reserve.getPayDate();
+            LocalDateTime WeekAgo = defaultDate.minus(7, ChronoUnit.DAYS);
+            LocalDateTime currentTime = defaultDate;
+            if(!betweenDefaultAndWeek.contains(currentTime)){
+                if (betweenDefaultAndWeek!= null) {
+                    betweenDefaultAndWeek.clear();
+                }while (currentTime.isAfter(WeekAgo)){
+                    betweenDefaultAndWeek.add(currentTime);
+                    currentTime = currentTime.minusDays(1);
+                }
+            }
+            String week =  defaultDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            week += " - " + WeekAgo.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
-            double totalWeek = weeklyTotalMap.getOrDefault(week, 0.0);
-            totalWeek += reserve.getTotalPrice();
-            weeklyTotalMap.put(week, totalWeek);
+            if (betweenDefaultAndWeek.contains(defaultDate)) {
+                   LocalDateTime oldWeek = betweenDefaultAndWeek.get(0);
+                   String oldWeeks = oldWeek.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                   oldWeeks += " - " + oldWeek.minus(7,ChronoUnit.DAYS).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                double totalWeek = weeklyTotalMap.getOrDefault(oldWeeks, 0.0);
+                totalWeek += reserve.getTotalPrice();
+                weeklyTotalMap.put(oldWeeks, totalWeek);
+            } else {
+                weeklyTotalMap.put(week, reserve.getTotalPrice()); // Add a new entry for the week
+            }
+
         }
+
         List<ReportIncome> result = new ArrayList<>();
         for (Map.Entry<String, Double> entry : weeklyTotalMap.entrySet()) {
             ReportIncome dto = new ReportIncome(entry.getKey(), entry.getValue());
             result.add(dto);
         }
+        Collections.sort(result, Comparator.comparing(ReportIncome::getReportDate).reversed());
 
         return result;
     }
