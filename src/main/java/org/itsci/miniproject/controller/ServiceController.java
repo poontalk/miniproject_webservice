@@ -19,7 +19,7 @@ public class ServiceController {
     private ServicesService servicesService;
 
     @RequestMapping("/list")
-    public ResponseEntity geyListService(){
+    public ResponseEntity getListService(){
         try {
             List<Service> services = servicesService.getAllServices();
             return new ResponseEntity<>(services, HttpStatus.OK);
@@ -53,7 +53,7 @@ public class ServiceController {
     }
 
     @RequestMapping("/add")
-    public ResponseEntity addService(@RequestBody Map<String,String> map){
+    public ResponseEntity addServiceModel(@RequestBody Map<String,String> map){
         try {
             Service service = servicesService.saveService(map);
             return new ResponseEntity<>(service,HttpStatus.OK);

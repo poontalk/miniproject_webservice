@@ -21,7 +21,7 @@ public class barberController {
     private BarberService barberService;
 
     @RequestMapping("/list")
-    public ResponseEntity listBarber() {
+    public ResponseEntity listAllMembers() {
         try {
             List<Barber> barbers = barberService.getAllBarber();
             return new ResponseEntity<>(barbers, HttpStatus.OK);

@@ -66,7 +66,7 @@ public class ReserveController {
     }
 
     @PatchMapping("/cancelreserve/{reserveId}")
-    public ResponseEntity cancelReserve(@PathVariable("reserveId") String reserveId) {
+    public ResponseEntity doCancelReserve(@PathVariable("reserveId") String reserveId) {
         try {
             reserveService.cancelJob(reserveId);
             return new ResponseEntity<>("This" + reserveId + "canceled", HttpStatus.OK);
@@ -88,7 +88,7 @@ public class ReserveController {
     }
 
     @GetMapping("/listforbarber/{barberId}")
-    public ResponseEntity listReserveForBarber(@PathVariable("barberId") String barberId) {
+    public ResponseEntity getListReserveForBarber(@PathVariable("barberId") String barberId) {
         try {
             List<Reserve> reserves = reserveService.findReserveForBarber(barberId);
             return new ResponseEntity<>(reserves, HttpStatus.OK);
