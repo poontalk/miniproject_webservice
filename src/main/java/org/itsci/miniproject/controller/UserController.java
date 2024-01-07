@@ -43,7 +43,7 @@ public class UserController {
         }
     }
     @GetMapping("/getbyid/{userId}")
-    public  ResponseEntity getUserById (@PathVariable("userId")String userId){
+    public  ResponseEntity doProfileDetail(@PathVariable("userId")String userId){
         try {
             User user = userService.getUserbyId(userId);
             return new ResponseEntity<>(user,HttpStatus.OK);

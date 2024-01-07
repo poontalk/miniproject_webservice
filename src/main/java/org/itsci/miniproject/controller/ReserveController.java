@@ -145,19 +145,19 @@ public class ReserveController {
         }
     }
     @GetMapping("/getweeklytotal")
-    public ResponseEntity<List<ReportIncome>> getWeeklyTotal() {
+    public ResponseEntity<List<ReportIncome>> getWeeklyIncome() {
         List<ReportIncome> weeklyTotalList = reserveService.getWeeklyTotal();
         return new ResponseEntity<>(weeklyTotalList, HttpStatus.OK);
     }
 
     @GetMapping("/totalMonthlySales")
-    public ResponseEntity<List <Map<String, Object>>> getTotalMonthlySales() {
+    public ResponseEntity<List <Map<String, Object>>> getMonthlyIncome() {
         List<Map<String, Object>> monthlySales = reserveService.getTotalMonthlySales();
         return new ResponseEntity<>(monthlySales, HttpStatus.OK);
     }
 
     @GetMapping("/getdailytotal")
-    public ResponseEntity<List<Map<String, Object>>> getDailyTotal() {
+    public ResponseEntity<List<Map<String, Object>>> getDailyIncome() {
         List<Map<String, Object>> dailyTotalList = reserveService.getDailyTotal();
         return new ResponseEntity<>(dailyTotalList, HttpStatus.OK);
     }

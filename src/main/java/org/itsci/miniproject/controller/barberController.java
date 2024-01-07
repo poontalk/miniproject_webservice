@@ -33,7 +33,7 @@ public class barberController {
     }
 
     @GetMapping("/getbyid/{barberId}")
-    public ResponseEntity getBarberById(@PathVariable("barberId") String barberId) {
+    public ResponseEntity getBarber(@PathVariable("barberId") String barberId) {
         try {
             Barber barber = barberService.getBarberById(barberId);
             return new ResponseEntity<>(barber, HttpStatus.OK);
